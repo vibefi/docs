@@ -2,52 +2,43 @@
 title: Client
 ---
 
-The `client/` repo is a Rust/Wry desktop runtime for approved VibeFi dapps.
+The `client/` repo is a Rust/Wry desktop runtime that provides a secure, deterministic environment for VibeFi dapps.
 
-## Responsibilities
+## Local Verified Builds
 
-- Load dapps inside a WebView with injected `window.ethereum` provider.
-- Fetch and verify bundle content from IPFS.
-- Build local bundles using Bun/Vite when needed.
-- Enforce runtime restrictions (`app://` protocol + strict CSP).
+To prevent supply-chain attacks and ensure dapps run exactly as proposed, the Client does not simply serve static files from IPFS. Instead, it performs a **Local Verified Build**:
 
-## Build and run
+1.  **Source Retrieval**: Fetches the dapp source bundle from IPFS using the `rootCid`.
+2.  **Manifest Verification**: Validates every file against the `manifest.json` included in the bundle.
+3.  **Environment Injection**: The client injects a standard `package.json`, `vite.config.ts`, and `tsconfig.json` into the temporary build directory. This ensures the dapp is built with the protocol's hardened configuration.
+4.  **Deterministic Build**: Runs `bun install --no-save` followed by `vite build`. This produces a clean distribution bundle in a local `.vibefi/dist` directory.
+
+## Secure Runtime & IPC Bridge
+
+Dapps run inside a WebView served over a custom `app://` protocol. Interaction with the user's wallet and the host system is strictly mediated via an IPC bridge.
+
+### `window.ethereum` Injection
+
+The client's `internal-ui` includes a `preload-app.ts` script that is injected into every dapp WebView. This script:
+- Defines a standard EIP-1193 `window.ethereum` provider.
+- Forwards `ethereum.request` calls to the Rust host via `window.ipc.postMessage`.
+- Handles host responses and events (like `accountsChanged` or `chainChanged`) through a global `__VibefiHostDispatch` function.
+
+### CSP Enforcement
+
+The Client enforces a strict Content Security Policy:
+- `connect-src 'none'`: Dapps cannot make any direct network requests (no `fetch`, `XHR`, or `WebSockets`).
+- All external data must be retrieved via the `eth_call` or other RPC methods through the injected provider.
+
+## Build and Run
 
 ```bash
 cd client
-cargo build
-cargo run
 cargo run -- --config ../contracts/.devnet/devnet.json
-cargo run -- --bundle ../cli/.vibefi/cache/<rootCid>
 ```
 
-## Config model
-
-Resolution order is:
-
-1. CLI args (`--config`, `--bundle`, `--no-build`)
-2. Config JSON
-3. `VIBEFI_*` env overrides
-4. Compile-time/debug defaults
-5. Runtime `settings.json` (applied at use sites)
-
-## Internal UI
-
-`client/internal-ui` is built automatically by `build.rs` during `cargo build`/`cargo run`.
-
-Manual build:
-
-```bash
-cd client/internal-ui
-bun install
-bun run build
-# optional type check
-tsc --noEmit
-```
-
-## Wallet backends
-
-- `local` (dev/testing)
-- `walletconnect` via `client/walletconnect-helper`
-
-Set `VIBEFI_WC_PROJECT_ID` (or config field) to use WalletConnect mode.
+### Wallet Backends
+The client supports multiple wallet modes via the IPC bridge:
+- **Local**: Uses deterministic devnet keys (for testing).
+- **WalletConnect**: Bridges dapp requests to an external wallet via the `walletconnect-helper` (Node.js sidecar).
+- **Hardware**: (Experimental) Direct interaction with hardware wallets.

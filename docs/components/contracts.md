@@ -2,33 +2,45 @@
 title: Contracts
 ---
 
-The `contracts/` repo is the source of truth for governance and registry behavior.
+The `contracts/` directory contains the Solidity smart contracts that form the VibeFi protocol's control plane. These contracts manage dapp registration, security policies, and decentralized governance.
 
-## Core contracts
+## Core Registry: `DappRegistry.sol`
 
-- `VfiToken`: ERC20 + voting delegation.
-- `VfiGovernor`: OZ Governor stack with quorum + proposal rules.
-- `VfiTimelock`: timelock executor for governance actions.
-- `DappRegistry`: dapp/version lifecycle with CID and status.
-- `ConstraintsRegistry`: on-chain constraints root registry.
-- `MinimumDelegationRequirement`: default proposer eligibility module.
+The `DappRegistry` is the canonical source of truth for all approved dapps and their versions.
 
-## Local development
+### Versioning Model
+Dapps in the registry progress through a multi-version lifecycle:
+- **`DappPublished`**: Triggered when a new dapp is created with its initial `rootCid`.
+- **`DappUpgraded`**: Triggered when a new version (new `rootCid`) is approved for an existing dapp.
+- **`DappMetadata`**: Stores off-chain references like name, version string, and description.
+
+### Version Statuses
+- `Published`: The version is active and can be run by users.
+- `Paused`: The version is temporarily disabled (e.g., during a security investigation).
+- `Deprecated`: The version is permanently disabled.
+
+## Governance: `VfiGovernor.sol`
+
+VibeFi uses an OpenZeppelin-based governor for decentralized decision-making, with protocol-specific extensions.
+
+### Security Council Veto
+The protocol includes a `SecurityCouncil` role with the power to immediately `veto` any active proposal before it is executed. This serves as a safety valve against malicious or buggy proposals.
+
+### Proposal Requirements
+Proposers must meet eligibility criteria (based on `VfiToken` balance) as defined in the `IProposalRequirements` contract. This prevents spam and ensures that only invested stakeholders can propose registry changes.
+
+## Security Policies: `ConstraintsRegistry.sol`
+
+This registry stores CIDs pointing to the security constraints (allowlists, forbidden patterns) used by the CLI and Client. Governance can update these constraints to adapt to new security threats or library updates.
+
+## Local Development
+
+The `contracts/` repo includes scripts for setting up a local devnet with pre-deployed contracts and funded accounts:
 
 ```bash
 cd contracts
-FOUNDRY_PROFILE=ci forge fmt --check
-FOUNDRY_PROFILE=ci forge build --sizes
-FOUNDRY_PROFILE=ci forge test -vvv
 ./script/local-devnet.sh
 ```
 
-## Notes
-
-- Deployment/profile must use optimizer + `via_ir` compatible settings (`FOUNDRY_PROFILE=ci`) to satisfy size limits.
-- Security Council rotation requires explicit role updates on registry contracts; changing governor council alone is not sufficient.
-- `contracts/specs/vibefi-dao-contracts-spec.md` is historical context, not canonical implementation guidance.
-
-## Sepolia snapshot
-
-`contracts/README.md` contains a deployment address table marked as current on **February 11, 2026**. Treat that table as point-in-time data and verify addresses before production use.
+### Build Profiles
+- Deployment/profile must use optimizer + `via_ir` compatible settings (`FOUNDRY_PROFILE=ci`) to satisfy contract size limits.
