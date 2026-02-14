@@ -2,31 +2,66 @@
 title: Architecture Overview
 ---
 
-VibeFi splits trust between governance, content addressing, and local runtime execution.
+VibeFi splits trust between on-chain governance, content addressing, and local runtime execution. No single party controls what code users run.
 
-## Control plane
+## End-to-End Flow
 
-- Governance contracts (`VfiGovernor`, `VfiTimelock`) decide which dapp versions are approved.
-- Registry contracts (`DappRegistry`, `ConstraintsRegistry`) store canonical references and policy roots.
-- Security Council has emergency controls (veto/pause/deprecate).
+```
+Developer → CLI package → IPFS publish → rootCid
+    ↓
+CLI dapp:propose → VfiGovernor proposal → vote → queue → execute
+    ↓
+DappRegistry stores rootCid on-chain
+    ↓
+Client reads registry → fetches from IPFS → verifies manifest → builds locally → serves in sandboxed webview
+```
 
-## Data plane
+## Control Plane (Contracts)
 
-- Dapp bundles are packaged deterministically by CLI.
-- Content is published to IPFS and referenced by root CID.
-- Human-readable metadata is emitted as events and indexed off-chain.
+On-chain governance decides which dapps are approved:
 
-## Execution plane
+- **VfiGovernor** + **VfiTimelock** — proposal → vote → queue → execute lifecycle with configurable delays
+- **DappRegistry** — canonical store of approved dapp versions (`rootCid`, status)
+- **ConstraintsRegistry** — governance-updatable build constraint references
+- **Security Council** — emergency veto, pause, and deprecation powers
 
-- The Rust client fetches approved content, verifies/builds locally, and serves over `app://`.
-- Runtime injects wallet provider (`window.ethereum`) and enforces restrictive CSP (`connect-src 'none'`).
-- No arbitrary outbound HTTP from dapps; interaction is RPC/wallet mediated.
+See [Contracts](../components/contracts.md).
 
-## Repo-level responsibilities
+## Data Plane (CLI + IPFS)
 
-- `contracts/`: protocol control plane
-- `cli/`: packaging/proposal operator interface
-- `client/`: deterministic runtime for end users
-- `e2e/`: integrated validation of governance + IPFS + runtime assumptions
-- `dapp-examples/`: constrained example dapps and authoring constraints
-- `studio/`: future UI-centric authoring/proposal surface
+Dapp source is packaged deterministically by the CLI:
+
+1. Validate dependencies against allowlist, scan for forbidden patterns
+2. Generate deterministic [manifest.json](../reference/manifest-schema.md) with file hashes
+3. Publish to IPFS, receive `rootCid`
+
+Only `rootCid` is stored on-chain. Human-readable metadata emitted as events for off-chain indexing.
+
+See [CLI](../components/cli.md).
+
+## Execution Plane (Client)
+
+The Rust client provides a secure, sandboxed runtime:
+
+1. **Fetch** approved source from IPFS by `rootCid`
+2. **Verify** every file against `manifest.json`
+3. **Build** locally with injected `package.json` + `vite.config.ts`
+4. **Serve** over `app://` protocol in sandboxed webview
+5. **Inject** `window.ethereum` (EIP-1193) bridged to wallet backends via [IPC](../reference/ipc-protocol.md)
+6. **Enforce** CSP: `connect-src 'none'` — dapps cannot make outbound HTTP
+
+All external data access is mediated through the injected provider → Rust host → RPC.
+
+See [Client](../components/client.md).
+
+## Repo Responsibilities
+
+| Directory | Role | Stack |
+|---|---|---|
+| `contracts/` | Protocol control plane | Solidity / Foundry |
+| `cli/` | Packaging + governance operator interface | Bun / TypeScript |
+| `client/` | Deterministic dapp runtime | Rust / Wry |
+| `packages/shared/` | Shared ABIs, config, IPFS, client utilities | TypeScript |
+| `e2e/` | Integrated validation of the full flow | Bun / TypeScript |
+| `dapp-examples/` | Reference dapps demonstrating constraints | React / TypeScript |
+| `studio/` | Future: UI for composing proposals and previewing dapps | TBD |

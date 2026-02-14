@@ -5,13 +5,9 @@ title: VibeFi Documentation
 
 VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 
-The protocol workflow is:
+1. Contributors package frontend code under [strict build constraints](./components/cli.md#package).
+2. A [governance proposal](./workflows/governance-lifecycle.md) publishes or upgrades a dapp version on-chain.
+3. Approved bundle roots are stored in the [DappRegistry](./components/contracts.md) and content is fetched from IPFS.
+4. End users run approved dapps in the [VibeFi client](./components/client.md) runtime — sandboxed, locally built, with no outbound HTTP.
 
-1. Contributors package frontend code under strict build constraints.
-2. A governance proposal publishes or upgrades a dapp version.
-3. Approved bundle roots are stored on-chain and content is fetched from IPFS.
-4. End users run approved dapps in the VibeFi client runtime.
-
-This docs repo is a first-pass consolidation of the monorepo docs (`cli`, `client`, `contracts`, `e2e`, `dapp-examples`, `studio`) plus architecture notes from the root vision document.
-
-Use the sidebar to start with environment setup, then move to component docs and governance workflow.
+Start with [Prerequisites](./getting-started/prerequisites.md) and [Local Stack](./getting-started/local-stack.md), then explore [Architecture](./architecture/overview.md) and component docs.

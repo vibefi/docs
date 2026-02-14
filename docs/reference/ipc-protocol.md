@@ -2,67 +2,112 @@
 title: IPC Protocol
 ---
 
-The communication between the VibeFi dapp (running in the WebView) and the Rust Client host is handled via a secure Inter-Process Communication (IPC) bridge.
+The VibeFi client bridges dapp JavaScript and the Rust host via JSON-based IPC over Wry's `window.ipc.postMessage`. Dapps have no direct network or key access — all sensitive operations go through this bridge.
 
-## Overview
+## Request
 
-Dapps do not have direct access to the network or the user's private keys. All sensitive operations are requested via `window.ethereum.request`, which is bridged to the host.
-
-## Message Flow
-
-### 1. Dapp to Host (Request)
-The dapp calls `window.ethereum.request({ method, params })`. The injected preload script wraps this into an `IpcRequest` and sends it to the host via `window.ipc.postMessage`.
-
-**Request Structure:**
 ```json
 {
   "id": 123,
   "providerId": "vibefi-provider",
   "method": "eth_sendTransaction",
-  "params": [...]
+  "params": [{ "to": "0x...", "value": "0x..." }]
 }
 ```
 
-### 2. Host to Dapp (Response)
-The Rust host processes the request (e.g., by prompting the user for approval or proxying to an RPC node). It then dispatches a response using the `__VibefiHostDispatch` function in the WebView.
+| Field | Type | Description |
+|---|---|---|
+| `id` | `u64` | Correlation ID for matching responses |
+| `providerId` | `string?` | Routes to handler — see Provider IDs below |
+| `method` | `string` | RPC method or internal method name |
+| `params` | `array\|object` | Method parameters |
 
-**Response Structure:**
+## Response
+
+Delivered via `evaluate_script()` calling `window.__VibefiHostDispatch()`:
+
 ```json
 {
   "kind": "RpcResponse",
-  "payload": {
-    "id": 123,
-    "result": "0x...",
-    "error": null
-  }
+  "payload": { "id": 123, "result": "0x...", "error": null }
 }
 ```
 
-### 3. Host to Dapp (Event)
-The host can emit asynchronous events (like account or chain changes) to the dapp.
+Error shape: `{ "id": 123, "result": null, "error": { "code": 4001, "message": "User rejected" } }`
 
-**Event Structure:**
+## Provider Events
+
+Push events from host (e.g., after wallet connection):
+
 ```json
 {
   "kind": "ProviderEvent",
-  "payload": {
-    "event": "accountsChanged",
-    "value": ["0x..."]
-  }
+  "payload": { "event": "accountsChanged", "value": ["0xabc..."] }
 }
 ```
 
+Standard EIP-1193 events: `accountsChanged`, `chainChanged`.
+
+## WalletConnect Pairing
+
+When WalletConnect generates a pairing URI, the host pushes:
+
+```json
+{
+  "kind": "WalletconnectPairing",
+  "payload": { "uri": "wc:abc123...", "qr_svg": "<svg>...</svg>" }
+}
+```
+
+The wallet selector renders the SVG as a scannable QR code.
+
 ## Provider IDs
 
-The bridge supports multiple virtual "providers" for different system responsibilities:
+| ID | Purpose |
+|---|---|
+| `vibefi-provider` | Standard Ethereum JSON-RPC (EIP-1193) for dapps |
+| `vibefi-wallet` | Wallet selector UI methods |
+| `vibefi-launcher` | Dapp registry/launcher methods |
+| `vibefi-tabbar` | Tab bar control |
+| `vibefi-settings` | Settings panel |
 
-- `vibefi-provider`: Standard Ethereum RPC (EIP-1193).
-- `vibefi-launcher`: Internal commands for the VibeFi launcher/home screen.
-- `vibefi-wallet`: Commands for managing the local wallet state.
-- `vibefi-tabbar`: UI synchronization for the desktop tab bar.
+## Internal Methods
 
-## Security Controls
+Beyond standard Ethereum JSON-RPC (`eth_*`, `personal_sign`, etc.), the client handles:
 
-- **Origin Validation**: The host only accepts IPC messages from dapps served over the `app://` protocol.
-- **Method Filtering**: Only approved RPC methods are passed through to the underlying node or wallet backend.
-- **Strict Typing**: All IPC messages are strictly validated against Rust `enum` and `struct` definitions in `ipc_contract.rs`.
+### Wallet Selector (`vibefi-wallet`)
+
+| Method | Purpose |
+|---|---|
+| `vibefi_connectLocal` | Set backend to local signer |
+| `vibefi_connectWalletConnect` | Start WalletConnect pairing flow |
+| `vibefi_connectHardware` | Detect and connect Ledger/Trezor |
+
+### Launcher (`vibefi-launcher`)
+
+| Method | Purpose |
+|---|---|
+| `vibefi_listDapps` | Fetch registry entries from contract events |
+| `vibefi_launchDapp` | Download from IPFS, build, open in new tab |
+
+### Settings (`vibefi-settings`)
+
+| Method | Purpose |
+|---|---|
+| `vibefi_getEndpoints` / `vibefi_setEndpoints` | Read/persist RPC endpoint list |
+| `vibefi_getIpfsSettings` / `vibefi_setIpfsSettings` | Read/persist IPFS config |
+
+### Tab Bar (`vibefi-tabbar`)
+
+| Method | Purpose |
+|---|---|
+| `vibefi_switchTab` | Bring tab to front |
+| `vibefi_closeTab` | Close a tab |
+| `vibefi_openHome` | Open home page |
+| `vibefi_openSettings` | Open settings panel |
+
+## Security
+
+- **Origin validation**: only accepts IPC from `app://` protocol
+- **Provider ID enforcement**: internal methods restricted to correct webview contexts
+- **Strict typing**: all messages validated against Rust `enum`/`struct` definitions in `ipc_contract.rs`

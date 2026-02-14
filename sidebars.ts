@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
         'components/contracts',
         'components/cli',
         'components/client',
+        'components/packages',
         'components/e2e',
         'components/dapp-examples',
         'components/studio',
@@ -42,6 +43,8 @@ const sidebars: SidebarsConfig = {
       label: 'Reference',
       items: [
         'reference/commands',
+        'reference/ipc-protocol',
+        'reference/manifest-schema',
         'reference/source-audit',
       ],
     },
