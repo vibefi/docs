@@ -2,33 +2,121 @@
 title: Contracts
 ---
 
-The `contracts/` repo is the source of truth for governance and registry behavior.
+The `contracts/` directory contains Foundry/Solidity smart contracts implementing on-chain governance, a dapp registry, and build constraints storage. Built on OpenZeppelin 5.4.
 
-## Core contracts
+## Contract Inventory
 
-- `VfiToken`: ERC20 + voting delegation.
-- `VfiGovernor`: OZ Governor stack with quorum + proposal rules.
-- `VfiTimelock`: timelock executor for governance actions.
-- `DappRegistry`: dapp/version lifecycle with CID and status.
-- `ConstraintsRegistry`: on-chain constraints root registry.
-- `MinimumDelegationRequirement`: default proposer eligibility module.
+### VfiToken (21 lines)
 
-## Local development
+ERC20 + ERC20Votes. Constructor mints initial supply to a designated holder. Holders must self-delegate to activate voting power.
 
-```bash
-cd contracts
-FOUNDRY_PROFILE=ci forge fmt --check
-FOUNDRY_PROFILE=ci forge build --sizes
-FOUNDRY_PROFILE=ci forge test -vvv
-./script/local-devnet.sh
+### VfiGovernor (176 lines)
+
+OpenZeppelin Governor stack: `GovernorSettings` + `GovernorCountingSimple` (For/Against/Abstain) + `GovernorVotes` + `GovernorVotesQuorumFraction` + `GovernorTimelockControl`.
+
+Extensions:
+- **Pluggable proposal eligibility** via `IProposalRequirements`. Governance can swap the implementation with `setProposalRequirements()`.
+- **Security Council veto**: `vetoProposal()` cancels any active proposal. Council address updatable via `setSecurityCouncil()`.
+
+### VfiTimelock (10 lines)
+
+Thin wrapper around OZ `TimelockController`. Governor holds `PROPOSER_ROLE`, execution is open (`address(0)` has `EXECUTOR_ROLE`).
+
+### DappRegistry (176 lines)
+
+Stores dapp versions on-chain. Each version holds a `rootCid` (bytes), status, proposer, and timestamp.
+
+**Version lifecycle:**
+
+```
+Published ←→ Paused    (reversible, Council or governance)
+    ↓
+Deprecated              (terminal, cannot unpause)
 ```
 
-## Notes
+Human-readable metadata (name, version, description) is emitted as `DappMetadata` events, not stored — gas efficient, indexer friendly.
 
-- Deployment/profile must use optimizer + `via_ir` compatible settings (`FOUNDRY_PROFILE=ci`) to satisfy size limits.
-- Security Council rotation requires explicit role updates on registry contracts; changing governor council alone is not sufficient.
-- `contracts/specs/vibefi-dao-contracts-spec.md` is historical context, not canonical implementation guidance.
+**Access control:**
+- `GOVERNANCE_ROLE` (held by Timelock): publish, upgrade, deprecate
+- `SECURITY_COUNCIL_ROLE`: pause, unpause, deprecate
 
-## Sepolia snapshot
+### ConstraintsRegistry (31 lines)
 
-`contracts/README.md` contains a deployment address table marked as current on **February 11, 2026**. Treat that table as point-in-time data and verify addresses before production use.
+Maps `constraintsId (bytes32) → rootCid (bytes)`. Governance-only updates. Used by CLI and Client to anchor build constraints without on-chain policy logic.
+
+### MinimumDelegationRequirement (27 lines)
+
+Default `IProposalRequirements` implementation. Requires proposer voting power >= `minBps` basis points of total supply (default: 100 BPS = 1%).
+
+## Governance Flow
+
+```
+Proposer (eligible) → propose()
+    ↓ voting delay (blocks)
+Voting period (token holders vote For/Against/Abstain)
+    ↓ voting period ends
+Queue to Timelock → queue()
+    ↓ timelock delay (seconds)
+Execute → execute() (anyone can call)
+```
+
+At any point before execution, the Security Council can `vetoProposal()` to cancel.
+
+## Deployment
+
+### Local Devnet
+
+```bash
+cd contracts && ./script/local-devnet.sh
+```
+
+Starts Anvil, deploys all contracts, writes `.devnet/devnet.json` with addresses, test accounts, and private keys.
+
+**Test accounts** (from mnemonic "test test test...junk"):
+
+| Index | Role | Allocation |
+|---|---|---|
+| 0 | Developer/deployer | Remaining supply |
+| 1 | Voter 1 | 100k VFI |
+| 2 | Voter 2 | 100k VFI |
+| 3 | Security Council 1 | 50k VFI (assigned on-chain) |
+| 4 | Security Council 2 | 50k VFI (funded, not assigned) |
+
+**Default devnet parameters** (configurable via env vars):
+
+| Parameter | Default |
+|---|---|
+| `VOTING_DELAY` | 1 block |
+| `VOTING_PERIOD` | 20 blocks |
+| `QUORUM_FRACTION` | 4% |
+| `TIMELOCK_DELAY` | 1 second |
+| `MIN_PROPOSAL_BPS` | 100 (1%) |
+| `INITIAL_SUPPLY` | 1M VFI |
+
+### Sepolia
+
+`DeploySepolia.s.sol` derives deployer from `SEPOLIA_MNEMONIC`, self-delegates, and outputs JSON with all addresses.
+
+### Build Profile
+
+`VfiGovernor` exceeds EIP-170 contract size limits without optimization. Deployment **requires** the CI profile:
+
+```bash
+FOUNDRY_PROFILE=ci forge build --sizes
+FOUNDRY_PROFILE=ci forge test -vvv
+```
+
+## Testing
+
+Two test suites:
+
+- **DappRegistry.t.sol**: Unit tests for publish, upgrade, pause/unpause
+- **GovernanceIntegration.t.sol**: Full governance cycles — propose, vote, queue, execute, veto, upgrade, deprecate, constraints update
+
+Tests use `DeployVibeFi.deploy()` to mirror production deployment, plus Forge cheatcodes (`vm.prank`, `vm.warp`, `vm.expectEmit`).
+
+## Known Limitations
+
+1. **Security Council rotation** requires updating both `VfiGovernor.setSecurityCouncil()` AND manually granting roles on `DappRegistry`/`ConstraintsRegistry`. These are separate operations.
+2. **Deprecated is terminal** — cannot be reversed.
+3. **Metadata is event-only** — must be indexed off-chain to query.

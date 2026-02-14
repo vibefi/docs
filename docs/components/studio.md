@@ -2,19 +2,12 @@
 title: Studio
 ---
 
-`studio/` exists as a separate repository/submodule, but current markdown content is minimal.
+`studio/` is a submodule placeholder for a future browser-based developer interface.
 
-## Current state
+## Intended Role
 
-- `studio/README.md` currently contains only a title.
-- No canonical setup/build/architecture documentation is present yet.
+- Compose and preview dapp content
+- Submit governance proposals
+- Manage dapp bundles and publishing
 
-## Intended role (from project docs)
-
-Studio is intended to be a developer/agent interface for:
-
-- composing proposal content
-- previewing dapp changes
-- publishing bundles and submitting governance proposals
-
-This page will be expanded once Studio docs are formalized.
+Currently contains only a `README.md` with a title. No setup, build, or architecture documentation exists yet.

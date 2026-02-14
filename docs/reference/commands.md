@@ -2,53 +2,67 @@
 title: Command Reference
 ---
 
-## Root monorepo
+Quick reference for all build/run commands across the monorepo.
+
+## Root Monorepo
 
 ```bash
-bun run refresh-abis
-```
-
-Forwards to CLI ABI refresh.
-
-## CLI (`cli/`)
-
-```bash
-bun run dev
-bun run refresh-abis
-bun run test:smoke
-bun run typecheck
-```
-
-`bun run test:e2e` currently exits with a notice to use `e2e/`.
-
-## E2E (`e2e/`)
-
-```bash
-bun run e2e
-bun run typecheck
-```
-
-## Client (`client/`)
-
-```bash
-cargo build
-cargo run
-cargo run -- --config <path>
-cargo run -- --bundle <path>
-```
-
-## Internal UI (`client/internal-ui/`)
-
-```bash
-bun run build
-tsc --noEmit
+bun install                 # Install workspace dependencies
+bun run refresh-abis        # Forward to CLI ABI refresh
 ```
 
 ## Contracts (`contracts/`)
 
 ```bash
-FOUNDRY_PROFILE=ci forge fmt --check
-FOUNDRY_PROFILE=ci forge build --sizes
-FOUNDRY_PROFILE=ci forge test -vvv
-./script/local-devnet.sh
+./script/local-devnet.sh                  # Start Anvil + deploy all contracts → .devnet/devnet.json
+FOUNDRY_PROFILE=ci forge build --sizes    # Build (CI profile required for size limits)
+FOUNDRY_PROFILE=ci forge test -vvv        # Run tests
+FOUNDRY_PROFILE=ci forge fmt --check      # Check formatting
 ```
+
+## CLI (`cli/`)
+
+```bash
+bun install                 # Install dependencies
+bun run dev                 # Run CLI in dev mode
+bun run refresh-abis        # Extract ABIs from contracts/out → packages/shared
+bun run test:smoke          # Smoke test (spawns devnet, runs basic commands)
+bun run typecheck           # TypeScript type check
+```
+
+See [CLI docs](../components/cli.md) for the full `vibefi` command reference.
+
+## Client (`client/`)
+
+```bash
+cargo build                                              # Build binary
+cargo run                                                # Run with defaults
+cargo run -- --config ../contracts/.devnet/devnet.json   # Run against devnet
+cargo run -- --bundle ../cli/.vibefi/cache/<rootCid>     # Run bundled dapp
+cargo run -- --bundle <path> --no-build                  # Skip Vite build step
+```
+
+### Internal UI (`client/internal-ui/`)
+
+```bash
+bun install         # Install dependencies
+bun run build       # Build React → IIFE bundles (must run before cargo build)
+tsc --noEmit        # Type check
+```
+
+## E2E (`e2e/`)
+
+```bash
+bun install         # Install dependencies
+bun run e2e         # Run full end-to-end test suite
+bun run typecheck   # TypeScript type check
+```
+
+## Local IPFS
+
+```bash
+docker compose -f docker-compose.ipfs.yml up -d     # Start
+docker compose -f docker-compose.ipfs.yml down       # Stop
+```
+
+Endpoints: API `http://127.0.0.1:5001`, Gateway `http://127.0.0.1:8080`
