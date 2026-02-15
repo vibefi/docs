@@ -18,10 +18,10 @@ bun run serve
 
 ## Deployment
 
-GitHub Actions deploys this site from `master` to GitHub Pages.
+Cloudflare Pages publishes this site from the configured production branch.
 
 Site URL target is configured as:
 
-- `https://vibefi.github.io`
+- `https://docs.vibefi.workers.dev`
 
-If org-level Pages or custom domain settings change, update `docusaurus.config.ts` accordingly.
+If the Cloudflare Pages project domain or custom domain changes, update `docusaurus.config.ts` accordingly.

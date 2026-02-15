@@ -11,12 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://vibefi.github.io',
+  url: 'https://docs.vibefi.workers.dev',
   baseUrl: '/',
-
-  organizationName: 'vibefi',
-  projectName: 'docs',
-  deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
   markdown: {
