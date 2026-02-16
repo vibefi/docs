@@ -46,6 +46,7 @@ Each IPC message carries `{id, provider_id, method, params}`. Responses are corr
 | `vibefi-launcher` | Dapp registry/launcher |
 | `vibefi-tabbar` | Tab bar control |
 | `vibefi-settings` | Settings panel |
+| `vibefi-ipfs` | Capability-scoped IPFS reads (`head`, `list`, `read`) |
 
 ## Configuration
 
