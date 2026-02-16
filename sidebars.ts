@@ -42,6 +42,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Reference',
       items: [
+        'reference/contract-addresses',
         'reference/commands',
         'reference/ipc-protocol',
         'reference/manifest-schema',

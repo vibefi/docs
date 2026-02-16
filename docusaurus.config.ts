@@ -32,6 +32,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          routeBasePath: '/',
           editUrl: 'https://github.com/vibefi/docs/tree/master/',
         },
         blog: false,
@@ -78,11 +79,11 @@ const config: Config = {
           items: [
             {
               label: 'Getting Started',
-              to: '/docs/getting-started/prerequisites',
+              to: '/getting-started/prerequisites',
             },
             {
               label: 'Governance Workflow',
-              to: '/docs/workflows/governance-lifecycle',
+              to: '/workflows/governance-lifecycle',
             },
           ],
         },
