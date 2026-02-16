@@ -49,6 +49,7 @@ const config: Config = {
       logo: {
         alt: 'VibeFi Logo',
         src: 'img/logo.svg',
+        href: 'https://vibefi.org',
       },
       items: [
         {

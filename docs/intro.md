@@ -3,6 +3,9 @@ slug: /
 title: VibeFi Documentation
 ---
 
+These docs are for developers building, governing, and operating VibeFi components.
+If you want to use VibeFi as an end user, go to [vibefi.org/download](https://vibefi.org/download).
+
 VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 
 1. Contributors package frontend code under [strict build constraints](./components/cli.md#package).
