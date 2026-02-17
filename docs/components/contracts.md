@@ -10,6 +10,14 @@ The `contracts/` directory contains Foundry/Solidity smart contracts implementin
 
 ERC20 + ERC20Votes. Constructor mints initial supply to a designated holder. Holders must self-delegate to activate voting power.
 
+### VfiTokenSeller (102 lines)
+
+Fixed-price testnet token seller for Sepolia:
+
+- Accepts ETH and transfers `VFI` from contract inventory to a recipient.
+- Owner can update `tokensPerEth`, withdraw collected ETH, and withdraw unsold tokens.
+- Includes quote and inventory helpers for operational tooling (`quoteTokenAmount`, `tokensAvailable`).
+
 ### VfiGovernor (176 lines)
 
 OpenZeppelin Governor stack: `GovernorSettings` + `GovernorCountingSimple` (For/Against/Abstain) + `GovernorVotes` + `GovernorVotesQuorumFraction` + `GovernorTimelockControl`.
@@ -108,9 +116,10 @@ FOUNDRY_PROFILE=ci forge test -vvv
 
 ## Testing
 
-Two test suites:
+Three test suites:
 
 - **DappRegistry.t.sol**: Unit tests for publish, upgrade, pause/unpause
+- **VfiTokenSeller.t.sol**: Unit tests for purchase flow, slippage checks, ownership controls, and withdrawals
 - **GovernanceIntegration.t.sol**: Full governance cycles — propose, vote, queue, execute, veto, upgrade, deprecate, constraints update
 
 Tests use `DeployVibeFi.deploy()` to mirror production deployment, plus Forge cheatcodes (`vm.prank`, `vm.warp`, `vm.expectEmit`).

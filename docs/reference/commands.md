@@ -18,6 +18,7 @@ bun run refresh-abis        # Forward to CLI ABI refresh
 FOUNDRY_PROFILE=ci forge build --sizes    # Build (CI profile required for size limits)
 FOUNDRY_PROFILE=ci forge test -vvv        # Run tests
 FOUNDRY_PROFILE=ci forge fmt --check      # Check formatting
+FOUNDRY_PROFILE=ci forge script script/DeployTokenSeller.s.sol:DeployTokenSeller --rpc-url sepolia --broadcast -vvv
 ```
 
 ## CLI (`cli/`)

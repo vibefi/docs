@@ -8,6 +8,7 @@ Deployed contract addresses by network.
 
 - Chain ID: `11155111`
 - Deploy block: `10239268`
+- VfiTokenSeller deploy block: `10276563`
 
 | Contract | Address |
 | --- | --- |
@@ -17,3 +18,4 @@ Deployed contract addresses by network.
 | VfiGovernor | `0x753d33e2E61F249c87e6D33c4e04b39731776297` |
 | VfiTimelock | `0xA1349b43D3f233287762897047980bAb3846E23b` |
 | VfiToken | `0xD11496882E083Ce67653eC655d14487030E548aC` |
+| VfiTokenSeller (testnet seller) | `0x93bb81a54d9Dd29b8e8037260aF93770c4F2A64E` |

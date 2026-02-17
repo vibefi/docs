@@ -100,6 +100,15 @@ const config: Config = {
             },
           ],
         },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'Telegram',
+              href: 'https://t.me/vibefi_dev',
+            },
+          ],
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} VibeFi contributors.`,
     },
