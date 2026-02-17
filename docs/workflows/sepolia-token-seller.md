@@ -2,9 +2,17 @@
 title: Sepolia Token Seller
 ---
 
+import SepoliaTokenBuyer from '@site/src/components/SepoliaTokenBuyer';
+
 The Sepolia token seller is a fixed-price contract that accepts Sepolia ETH and transfers VibeFi testnet tokens (`VFI`) to buyers.
 
 This replaces a faucet-style flow with a simple on-chain buy flow.
+
+## Browser Buy (wallet)
+
+Use this if you want to connect a wallet and buy without running Foundry commands.
+
+<SepoliaTokenBuyer />
 
 ## Addresses
 
@@ -12,8 +20,8 @@ Set these first:
 
 ```bash
 export SEPOLIA_RPC_URL="<your-rpc-url>"
-export VFI_TOKEN_ADDRESS="<vfi-token-address>"
-export TOKEN_SELLER_ADDRESS="<vfi-token-seller-address>"
+export VFI_TOKEN_ADDRESS="0xD11496882E083Ce67653eC655d14487030E548aC"
+export TOKEN_SELLER_ADDRESS="0x93bb81a54d9Dd29b8e8037260aF93770c4F2A64E"
 ```
 
 ## Buyer Flow (cast)
@@ -62,23 +70,23 @@ cast call $VFI_TOKEN_ADDRESS "balanceOf(address)(uint256)" $BUYER_ADDRESS --rpc-
 Set your owner/deployer key:
 
 ```bash
-export OWNER_PK="<private-key>"
-export OWNER_ADDRESS=$(cast wallet address --private-key "$OWNER_PK")
+export OWNER_ADDRESS=$(cast wallet address --mnemonic "$SEPOLIA_MNEMONIC")
+export OWNER_PK=$(cast wallet private-key --mnemonic "$SEPOLIA_MNEMONIC")
 ```
 
 Deploy a token seller:
 
 ```bash
 cd contracts
-export PRIVATE_KEY=$OWNER_PK
 export VFI_TOKEN_ADDRESS="<vfi-token-address>"
-export TOKENS_PER_ETH=$(cast to-wei 1000 ether) # 1000 VFI per 1 ETH
 export SELLER_OWNER=$OWNER_ADDRESS
 
 FOUNDRY_PROFILE=ci forge script script/DeployTokenSeller.s.sol:DeployTokenSeller \
   --rpc-url $SEPOLIA_RPC_URL \
   --broadcast -vvv
 ```
+
+This script deploys with `10 VFI` per `1 ETH` and transfers `10,000 VFI` from the deployer into seller inventory.
 
 Fund seller inventory:
 
