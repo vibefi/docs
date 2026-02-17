@@ -4,7 +4,7 @@ title: VibeFi Documentation
 ---
 
 These docs are for developers building, governing, and operating VibeFi components.
-If you want to use VibeFi as an end user, go to [vibefi.org/download](https://vibefi.org/download).
+If you want to use VibeFi as an end user, go to [vibefi.dev/download](https://vibefi.dev/download).
 
 VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 
@@ -14,3 +14,7 @@ VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 4. End users run approved dapps in the [VibeFi client](./components/client.md) runtime — sandboxed, locally built, with no outbound HTTP.
 
 Start with [Prerequisites](./getting-started/prerequisites.md) and [Local Stack](./getting-started/local-stack.md), then explore [Architecture](./architecture/overview.md) and component docs.
+
+:::tip Need Sepolia test funds?
+Use the [Sepolia Testnet Faucet](./getting-started/sepolia-testnet-faucet.md) to buy VFI testnet tokens and get started quickly.
+:::

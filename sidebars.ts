@@ -9,6 +9,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'getting-started/prerequisites',
         'getting-started/local-stack',
+        'getting-started/sepolia-testnet-faucet',
       ],
     },
     {
@@ -36,7 +37,6 @@ const sidebars: SidebarsConfig = {
       label: 'Workflows',
       items: [
         'workflows/governance-lifecycle',
-        'workflows/sepolia-token-seller',
       ],
     },
     {

@@ -1,5 +1,5 @@
 ---
-title: Sepolia Token Seller
+title: Sepolia Testnet Faucet
 ---
 
 import SepoliaTokenBuyer from '@site/src/components/SepoliaTokenBuyer';
@@ -8,11 +8,13 @@ The Sepolia token seller is a fixed-price contract that accepts Sepolia ETH and 
 
 This replaces a faucet-style flow with a simple on-chain buy flow.
 
-## Browser Buy (wallet)
+<details>
+<summary>Browser Buy (wallet)</summary>
 
 Use this if you want to connect a wallet and buy without running Foundry commands.
 
 <SepoliaTokenBuyer />
+</details>
 
 ## Addresses
 
@@ -88,6 +90,16 @@ FOUNDRY_PROFILE=ci forge script script/DeployTokenSeller.s.sol:DeployTokenSeller
 
 This script deploys with `10 VFI` per `1 ETH` and transfers `10,000 VFI` from the deployer into seller inventory.
 
+Capture the newly deployed seller address from the deploy output and re-export it before running admin commands:
+
+```bash
+# replace with the address printed by DeployTokenSeller
+export TOKEN_SELLER_ADDRESS="<new-token-seller-address>"
+echo $TOKEN_SELLER_ADDRESS
+```
+
+Do not keep using the shared address from the earlier **Addresses** section for owner/admin actions.
+
 Fund seller inventory:
 
 ```bash
@@ -140,6 +152,6 @@ cast send $TOKEN_SELLER_ADDRESS \
 
 ## Getting Sepolia ETH
 
-If you do not have enough Sepolia ETH to buy VFI testnet tokens, use testnetbridge to get ETH first.
+If you do not have enough Sepolia ETH to buy VFI testnet tokens, use [testnetbridge](https://testnetbridge.com/sepolia) to get ETH first.
 
 If you do not want to do that, ask in the Telegram group and we can help directly.

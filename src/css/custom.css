@@ -35,3 +35,39 @@
   --ifm-color-primary-lightest: #66e2d9;
   --docusaurus-highlighted-code-line-bg: rgba(15, 118, 110, 0.24);
 }
+
+.vf-gradient-button {
+  border: none;
+  background-image: linear-gradient(120deg, #8d66e8, #33bed8, #57cb7f);
+  color: #fff;
+}
+
+.vf-gradient-button:hover:not(:disabled) {
+  filter: brightness(0.92) saturate(0.9);
+}
+
+.vf-gradient-button:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, #33bed8 40%, transparent);
+}
+
+.vf-utility-button {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: #fff;
+  color: var(--ifm-font-color-base);
+}
+
+.vf-utility-button:hover:not(:disabled) {
+  border-color: var(--ifm-color-emphasis-500);
+  background: #fff;
+}
+
+[data-theme='dark'] .vf-utility-button {
+  border-color: var(--ifm-color-emphasis-600);
+  background: #000;
+  color: #fff;
+}
+
+[data-theme='dark'] .vf-utility-button:hover:not(:disabled) {
+  border-color: var(--ifm-color-emphasis-400);
+  background: #000;
+}

@@ -253,7 +253,7 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
   }, [ethAmount, provider]);
 
   const refreshQuote = useCallback(async (updateStatus: boolean) => {
-    if (!provider || !isConnected || !onSepolia) {
+    if (!provider || !onSepolia) {
       return;
     }
     try {
@@ -267,17 +267,17 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
       setQuote(null);
       setTokensPerEth(null);
     }
-  }, [isConnected, onSepolia, provider, quoteTokenAmount]);
+  }, [onSepolia, provider, quoteTokenAmount]);
 
   useEffect(() => {
-    if (!provider || !isConnected || !onSepolia || isBusy) {
+    if (!provider || !onSepolia || isBusy) {
       return;
     }
     const timer = window.setTimeout(() => {
       void refreshQuote(false);
     }, 300);
     return () => window.clearTimeout(timer);
-  }, [ethAmount, isBusy, isConnected, onSepolia, provider, refreshQuote]);
+  }, [ethAmount, isBusy, onSepolia, provider, refreshQuote]);
 
   const buyTokens = useCallback(async () => {
     if (!provider || !wallet.account) {
@@ -328,6 +328,20 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
     }
   }, [ethAmount, onSepolia, provider, quoteTokenAmount, wallet.account]);
 
+  const amountBoxStyle: React.CSSProperties = {
+    width: '100%',
+    border: '1px solid var(--ifm-color-emphasis-300)',
+    borderRadius: 4,
+    padding: '8px 10px',
+    height: 38,
+    boxSizing: 'border-box',
+    background: 'var(--ifm-background-surface-color)',
+    color: 'var(--ifm-font-color-base)',
+    fontFamily: 'inherit',
+    fontSize: '1rem',
+    lineHeight: '22px',
+  };
+
   return (
     <div style={{border: '1px solid var(--ifm-color-emphasis-300)', borderRadius: 10, padding: 16, marginBottom: 20}}>
       <p style={{marginTop: 0}}>
@@ -339,26 +353,56 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
         <strong>Token Seller:</strong> <code>{TOKEN_SELLER_ADDRESS}</code>
       </p>
 
-      <label style={{display: 'block', fontWeight: 600, marginBottom: 4}} htmlFor="eth-amount">
-        ETH Amount
-      </label>
-      <input
-        id="eth-amount"
-        type="text"
-        value={ethAmount}
-        onChange={(event) => setEthAmount(event.target.value)}
-        placeholder="0.01"
-        style={{width: '100%', marginBottom: 12}}
-      />
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 12,
+          marginBottom: 12,
+        }}
+      >
+        <div>
+          <label style={{display: 'block', fontWeight: 600, marginBottom: 4}} htmlFor="eth-amount">
+            ETH Amount
+          </label>
+          <input
+            id="eth-amount"
+            type="text"
+            value={ethAmount}
+            onChange={(event) => setEthAmount(event.target.value)}
+            placeholder="0.01"
+            style={{
+              ...amountBoxStyle,
+              appearance: 'none',
+              WebkitAppearance: 'none',
+            }}
+          />
+        </div>
+        <div>
+          <label style={{display: 'block', fontWeight: 600, marginBottom: 4}} htmlFor="vfi-amount-out">
+            Receive VFI
+          </label>
+          <div
+            id="vfi-amount-out"
+            style={{
+              ...amountBoxStyle,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {quote !== null ? `${formatUnits(quote, 18)} VFI` : 'Enter amount on Sepolia'}
+          </div>
+        </div>
+      </div>
 
       <div style={{display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12}}>
-        <button type="button" onClick={connectWallet} disabled={isBusy || !provider}>
-          {isConnected ? 'Reconnect Wallet' : 'Connect Wallet'}
-        </button>
-        <button type="button" onClick={() => void switchToSepolia()} disabled={isBusy || !isConnected || !provider}>
-          Switch to Sepolia
-        </button>
-        <button type="button" onClick={buyTokens} disabled={!canSubmit}>
+        <button
+          type="button"
+          className="button vf-gradient-button"
+          onClick={buyTokens}
+          disabled={!canSubmit}
+          style={{minWidth: 124}}
+        >
           Buy VFI
         </button>
       </div>
@@ -375,11 +419,6 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
           <strong>Price:</strong> {formatUnits(tokensPerEth, 18)} VFI per ETH
         </p>
       ) : null}
-      {quote !== null ? (
-        <p style={{margin: '4px 0'}}>
-          <strong>Quote:</strong> {formatUnits(quote, 18)} VFI
-        </p>
-      ) : null}
       {txHash ? (
         <p style={{margin: '4px 0'}}>
           <strong>Tx:</strong>{' '}
@@ -392,6 +431,24 @@ function SepoliaTokenBuyerInner(): React.JSX.Element {
       <p style={{marginBottom: 0}}>
         <strong>Status:</strong> {status}
       </p>
+      <div style={{display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12}}>
+        <button
+          type="button"
+          className="button vf-utility-button"
+          onClick={connectWallet}
+          disabled={isBusy || !provider}
+        >
+          {isConnected ? 'Reconnect Wallet' : 'Connect Wallet'}
+        </button>
+        <button
+          type="button"
+          className="button vf-utility-button"
+          onClick={() => void switchToSepolia()}
+          disabled={isBusy || !isConnected || !provider}
+        >
+          Switch to Sepolia
+        </button>
+      </div>
     </div>
   );
 }
