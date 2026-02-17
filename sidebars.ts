@@ -36,6 +36,7 @@ const sidebars: SidebarsConfig = {
       label: 'Workflows',
       items: [
         'workflows/governance-lifecycle',
+        'workflows/sepolia-token-seller',
       ],
     },
     {
