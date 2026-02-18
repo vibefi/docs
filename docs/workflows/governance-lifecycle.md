@@ -36,10 +36,28 @@ bun run src/index.ts dapp:propose \
 
 ## 4. Vote and finalize
 
+Wait for each governance phase before running the next command:
+
+- After `dapp:propose`, wait for the proposal to become `Active` (voting delay).
+- After `vote:cast`, wait for the proposal to become `Succeeded` (voting period + quorum/pass checks).
+- After `proposals:queue`, wait for timelock delay before `proposals:execute`.
+
+Current Sepolia deployment parameters:
+
+- `votingDelay = 1` block
+- `votingPeriod = 50` blocks
+- `timelockDelay = 60` seconds
+
 ```bash
 bun run src/index.ts vote:cast <proposalId> --support for
 bun run src/index.ts proposals:queue <proposalId>
 bun run src/index.ts proposals:execute <proposalId>
+```
+
+Use this to check proposal state between steps:
+
+```bash
+bun run src/index.ts proposals:show <proposalId> --network sepolia --json
 ```
 
 ## 5. Validate registry state
