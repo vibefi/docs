@@ -46,8 +46,7 @@ const sidebars: SidebarsConfig = {
         'reference/contract-addresses',
         'reference/commands',
         'reference/ipc-protocol',
-        'reference/manifest-schema',
-        'reference/source-audit',
+        'reference/manifest-schema'
       ],
     },
   ],

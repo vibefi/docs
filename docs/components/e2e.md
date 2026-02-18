@@ -26,7 +26,7 @@ cd e2e && cp .env.example .env
 | `ANVIL_PORT` | 8546 | No |
 | `IPFS_API` | `http://127.0.0.1:5001` | No |
 | `IPFS_GATEWAY` | `http://127.0.0.1:8080` | No |
-| `MAINNET_FORK_URL` | — | No |
+| `MAINNET_RPC_URL` | — | No |
 
 ## Test Flow
 

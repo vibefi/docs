@@ -2,12 +2,31 @@
 title: Studio
 ---
 
-`studio/` is a submodule placeholder for a future browser-based developer interface.
+`studio/` is the governance-facing web app for proposal workflows, voting, registry visibility, and bundle review.
 
-## Intended Role
+## Current Role
 
-- Compose and preview dapp content
-- Submit governance proposals
-- Manage dapp bundles and publishing
+- Propose `publishDapp` and `upgradeDapp` governance actions
+- Vote, queue, and execute proposals
+- Inspect DappRegistry state from on-chain events
+- Review bundle manifests/files via the IPFS integration
+- View historical proposals
 
-Currently contains only a `README.md` with a title. No setup, build, or architecture documentation exists yet.
+Core implementation lives under `studio/src/` (notably `App.tsx`, `features/`, `eth/`, and `ipfs/`).
+
+## Local Run
+
+```bash
+cd studio
+bun install
+bun x vite dev
+```
+
+Build for production:
+
+```bash
+cd studio
+bun x vite build
+```
+
+See `studio/README.md`, `studio/design.md`, and `studio/plan.md` for scope and rollout details.
