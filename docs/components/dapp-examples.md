@@ -32,7 +32,7 @@ DEX interface: swap ETH ↔ ERC-20 tokens with quoting and slippage control.
 **Key patterns:**
 - `Router.getAmountsOut()` for price quotes
 - Slippage: `minOut = amountOut * (10000 - slipBps) / 10000`
-- Deadline: `now + 10 minutes` prevents sandwich attacks
+- Deadline: `now + 10 minutes`
 - Separate flows for ETH→Token (`swapExactETHForTokens`, payable) and Token→ETH (`swapExactTokensForETH`, requires approval)
 - Token metadata auto-detection via `symbol()`, `decimals()`, `name()` calls
 
@@ -65,7 +65,7 @@ const receipt = await publicClient.waitForTransactionReceipt({ hash })
 
 **State management:** React hooks + wagmi hooks (`useAccount`, `useConnect`, `useReadContract`, `useWriteContract`) + React Query (via wagmi) for caching.
 
-**Styling:** Inline CSS (no Tailwind/Bootstrap) — Aave uses CSS variables in `index.html`, Uniswap uses React inline styles, Safe uses CSS strings in TypeScript.
+**Styling:** Lightweight local CSS and inline styles.
 
 ## Local Development
 

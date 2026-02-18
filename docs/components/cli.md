@@ -45,15 +45,15 @@ Validates and bundles a dapp directory:
 
 6. **IPFS publish** — uploads bundle, returns `rootCid` (or `--no-ipfs` for keccak256 hash)
 
-Options: `--constraints <path>` for custom constraint overrides, `--ipfs-api`, `--ipfs-gateway`.
+Options: `--constraints <path>` for custom constraint overrides, `--ipfs-api <url>`, `--no-ipfs`, `--no-emit-manifest`.
 
 ### Dapp Operations
 
 ```bash
 vibefi dapp:propose --root-cid <cid> --name "App" --dapp-version "1.0.0" --description "..."
 vibefi dapp:upgrade --dapp-id <id> --root-cid <cid> --name "App" --dapp-version "2.0.0" --description "..."
-vibefi dapp:list [--json] [--from-block N]
-vibefi dapp:fetch --root-cid <cid> --out <dir> [--ipfs-api <url>] [--ipfs-gateway <url>]
+vibefi dapp:list [--json] [--from-block N] [--to-block N]
+vibefi dapp:fetch --root-cid <cid> --out <dir> [--ipfs-api <url>] [--ipfs-gateway <url>] [--no-verify]
 ```
 
 `dapp:propose` encodes `publishDapp()` calldata and submits a governance proposal. `dapp:list` aggregates all registry events (Published, Upgraded, Paused, Deprecated, etc.) and computes latest status per dapp.
@@ -63,10 +63,10 @@ vibefi dapp:fetch --root-cid <cid> --out <dir> [--ipfs-api <url>] [--ipfs-gatewa
 ### Governance
 
 ```bash
-vibefi proposals:list [--from-block N] [--limit 50]
-vibefi proposals:show <proposalId>
-vibefi proposals:queue <proposalId>
-vibefi proposals:execute <proposalId>
+vibefi proposals:list [--from-block N] [--to-block N] [--limit 50]
+vibefi proposals:show <proposalId> [--from-block N] [--to-block N]
+vibefi proposals:queue <proposalId> [--from-block N] [--to-block N]
+vibefi proposals:execute <proposalId> [--from-block N] [--to-block N]
 ```
 
 ### Voting
@@ -82,9 +82,9 @@ vibefi vote:status <proposalId>
 
 ```bash
 vibefi council:pause --dapp-id <id> --version-id <id> --reason "..."
-vibefi council:unpause --dapp-id <id> --version-id <id>
-vibefi council:deprecate --dapp-id <id> --version-id <id>
-vibefi council:veto <proposalId>
+vibefi council:unpause --dapp-id <id> --version-id <id> --reason "..."
+vibefi council:deprecate --dapp-id <id> --version-id <id> --reason "..."
+vibefi council:veto <proposalId> [--from-block N] [--to-block N]
 ```
 
 ## Configuration
