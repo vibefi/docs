@@ -54,7 +54,7 @@ Resolution order (later wins):
 
 1. **Defaults** — hardcoded (RPC `127.0.0.1:8546`, IPFS gateway `127.0.0.1:8080`)
 2. **`--config <path>`** — JSON file with `AppConfig` fields:
-   - `chainId`, `rpcUrl`, `dappRegistry`, `localNetwork`, `developerPrivateKey`
+   - `chainId`, `rpcUrl`, `dappRegistry`, `testNetwork`, `developerPrivateKey`
    - `walletConnect: {projectId, relayUrl}`
    - `ipfsBackend`, `ipfsGateway`, `ipfsHeliaGateways`, `cacheDir`
 3. **Environment variables** — `VIBEFI_RPC_URL`, `VIBEFI_WC_PROJECT_ID`, `VIBEFI_WC_RELAY_URL`, `VIBEFI_ENABLE_DEVTOOLS`
@@ -71,7 +71,7 @@ Three mutually exclusive backends; selected at runtime via wallet selector UI:
 
 | Backend | Implementation | Use Case |
 |---|---|---|
-| **Local** | `PrivateKeySigner` (Alloy) | Devnet testing. Uses demo key when `localNetwork: true`. |
+| **Local** | `PrivateKeySigner` (Alloy) | Testnet/local signing using configured or manually entered private key. |
 | **WalletConnect** | Out-of-process Node.js helper, stdin/stdout JSON | Production mobile/desktop wallets |
 | **Hardware** | Ledger then Trezor auto-detect (Alloy) | LedgerLive(0) / TrezorLive(0) HD paths |
 
