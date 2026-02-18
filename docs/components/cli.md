@@ -37,11 +37,11 @@ Validates and bundles a dapp directory:
 
 2. **Forbidden patterns** — scans `.ts`, `.tsx`, `index.html` for: `fetch(`, `XMLHttpRequest`, `WebSocket`, `import("http`, `http://`, `https://`
 
-3. **Address validation** — all addresses in `addresses.json` must be valid EIP-55 checksums
+3. **Source properties validation** — `vibefi.json.addresses` must be present and all addresses must be valid EIP-55 checksums
 
 4. **ABI validation** — all files in `abis/` must be valid JSON
 
-5. **Manifest generation** — deterministic `manifest.json` with sorted file list, byte counts, metadata, and constraint versions
+5. **Manifest generation** — deterministic post-bundle `manifest.json` with sorted file list, byte counts, metadata, and constraint versions
 
 6. **IPFS publish** — uploads bundle, returns `rootCid` (or `--no-ipfs` for keccak256 hash)
 
