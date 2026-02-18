@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/prerequisites',
         'getting-started/local-stack',
         'getting-started/sepolia-testnet-faucet',
+        'getting-started/contributing',
       ],
     },
     {
