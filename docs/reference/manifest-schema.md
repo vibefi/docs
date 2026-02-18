@@ -43,6 +43,18 @@ The client verifies generated `manifest.json` before building.
   "version": "1.0.0",
   "description": "A VibeFi dapp",
   "createdAt": "2026-02-14T12:00:00.000Z",
+  "capabilities": {
+    "ipfs": {
+      "allow": [
+        {
+          "cid": "bafy...",
+          "paths": ["metadata/**"],
+          "as": ["json", "text", "snippet", "image"],
+          "maxBytes": 262144
+        }
+      ]
+    }
+  },
   "constraints": {
     "type": "default",
     "allowedDependencies": { "react": "19.2.4", "viem": "2.45.0", "..." : "..." }
@@ -64,6 +76,7 @@ The client verifies generated `manifest.json` before building.
 | `version` | `string` | Dapp version string |
 | `description` | `string` | Human-readable description |
 | `createdAt` | `ISO8601` | Packaging timestamp |
+| `capabilities` | `object` | Optional runtime capability rules copied from source `vibefi.json` |
 | `constraints` | `object` | Security policy used during packaging (`type` + `allowedDependencies` map) |
 | `entry` | `string` | Entry HTML file (always `index.html`) |
 | `files` | `{path, bytes}[]` | Every file in the bundle — client verifies sizes against disk |
