@@ -23,10 +23,11 @@ cd e2e && cp .env.example .env
 | Variable | Default | Required |
 |---|---|---|
 | `MONOREPO_DIR` | — | Yes (absolute path) |
+| `MAINNET_RPC_URL` | — | No (used for mainnet fork mode) |
+| `SEPOLIA_RPC_URL` | — | No (required only when running `--sepolia`) |
 | `ANVIL_PORT` | 8546 | No |
 | `IPFS_API` | `http://127.0.0.1:5001` | No |
 | `IPFS_GATEWAY` | `http://127.0.0.1:8080` | No |
-| `MAINNET_FORK_URL` | — | No |
 
 ## Test Flow
 
@@ -60,6 +61,12 @@ All CLI commands run with `--json`; output parsed with `JSON.parse()` for field 
 
 ```bash
 cd e2e && bun install && bun run e2e
+```
+
+Sepolia fork mode:
+
+```bash
+cd e2e && bun run e2e --sepolia
 ```
 
 Anvil is left running after tests for manual inspection.
