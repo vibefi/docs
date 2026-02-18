@@ -33,5 +33,5 @@ bun install
 - `client/`: Wry/Rust desktop runtime for approved dapps.
 - `e2e/`: end-to-end validation flow.
 - `dapp-examples/`: constrained frontend examples.
-- `studio/`: studio app (currently minimally documented).
+- `studio/`: governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
 - `packages/shared/`: shared TypeScript utilities.

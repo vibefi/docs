@@ -35,6 +35,18 @@ The client verifies generated `manifest.json` before building.
 
 `addresses` is required and validated for EIP-55 checksums (numeric metadata like `chainId` is allowed). `capabilities` is optional.
 
+### Capabilities
+
+`capabilities` is optional in source `vibefi.json`. When present, packaging validates it and copies it into emitted `manifest.json`.
+
+Current shape:
+
+- `capabilities.ipfs.allow[]`: allowlist entries for IPFS reads.
+- `paths`: non-empty path-pattern list.
+- `as`: non-empty list of allowed read kinds (`json`, `text`, `snippet`, `image`).
+- `cid` (optional): pin policy to a specific CID.
+- `maxBytes` (optional): positive integer byte limit per read.
+
 ## Manifest Structure
 
 ```json
@@ -57,7 +69,8 @@ The client verifies generated `manifest.json` before building.
   },
   "constraints": {
     "type": "default",
-    "allowedDependencies": { "react": "19.2.4", "viem": "2.45.0", "..." : "..." }
+    "allowedDependencies": { "react": "19.2.4", "viem": "2.45.0", "..." : "..." },
+    "allowedDevDependencies": { "vite": "7.2.4", "typescript": "5.9.3", "..." : "..." }
   },
   "entry": "index.html",
   "files": [
@@ -77,7 +90,7 @@ The client verifies generated `manifest.json` before building.
 | `description` | `string` | Human-readable description |
 | `createdAt` | `ISO8601` | Packaging timestamp |
 | `capabilities` | `object` | Optional runtime capability rules copied from source `vibefi.json` |
-| `constraints` | `object` | Security policy used during packaging (`type` + `allowedDependencies` map) |
+| `constraints` | `object` | Security policy used during packaging (`type`, `allowedDependencies`, `allowedDevDependencies`) |
 | `entry` | `string` | Entry HTML file (always `index.html`) |
 | `files` | `{path, bytes}[]` | Every file in the bundle — client verifies sizes against disk |
 

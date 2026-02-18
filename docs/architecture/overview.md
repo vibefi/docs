@@ -64,4 +64,4 @@ See [Client](../components/client.md).
 | `packages/shared/` | Shared ABIs, config, IPFS, client utilities | TypeScript |
 | `e2e/` | Integrated validation of the full flow | Bun / TypeScript |
 | `dapp-examples/` | Reference dapps demonstrating constraints | React / TypeScript |
-| `studio/` | Future: UI for composing proposals and previewing dapps | TBD |
+| `studio/` | Governance studio for proposing, voting, registry inspection, and bundle review | React / Vite |
