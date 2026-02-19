@@ -92,8 +92,10 @@ cargo run -- --bundle ../cli/.vibefi/cache/<rootCid>
 ```
 
 1. Reads `manifest.json`, validates file list and sizes
-2. Runs `bun install --no-save` + `bun x vite build` (skippable with `--no-build`)
-3. Serves compiled output from `.vibefi/dist/` via `app://` protocol
+2. Uses `manifest.layout` / `manifest.constraints.type` to select runtime path:
+   - `constrained`: injects standard build files and runs `bun install --no-save` + `bun x --bun vite build` (skippable with `--no-build`)
+   - `static-html`: skips Bun/Vite and copies validated `.html`, `.js`, `.json` files directly
+3. Serves output from `.vibefi/dist/` via `app://` protocol
 
 ## Launcher / Registry
 
@@ -105,9 +107,9 @@ When `--config` provides a `dappRegistry` address:
 
 ## Security
 
-- **CSP**: `default-src 'self' app:; connect-src 'none'` — dapps cannot make outbound HTTP
+- **CSP**: strict profile for constrained bundles; static-html profile allows inline scripts for compatibility, but keeps `connect-src 'none'`
 - **Navigation whitelist**: only `app://`, `about:blank` allowed
-- **No external scripts**: all internal JS embedded at compile time via `include_str!()`
+- **No external script origins**: scripts must resolve to local `app://` assets; remote origins are not allowed
 - **WalletConnect URI redaction** in logs (first 18 + last 6 chars)
 
 ## RPC Failover

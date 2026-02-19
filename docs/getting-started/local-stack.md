@@ -42,6 +42,8 @@ cd ../e2e
 bun install
 cp .env.example .env
 # set MONOREPO_DIR in .env
+cd ../dapp-examples && git submodule sync --recursive && git submodule update --init --recursive
+cd ../e2e
 bun run e2e
 ```
 

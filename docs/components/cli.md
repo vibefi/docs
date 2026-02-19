@@ -31,19 +31,23 @@ vibefi package --path ./my-app --name "App" --dapp-version "1.0.0" --description
 
 Validates and bundles a dapp directory:
 
-1. **Dependency allowlist** — only pinned versions of approved packages:
+1. **Layout detection** — accepts either:
+   - `constrained`: `src/`, `assets/`, `abis/`, `vibefi.json`, `index.html`, `package.json`
+   - `static-html`: `vibefi.json`, `index.html` plus only `.html`, `.js`, `.json` files
+
+2. **Constrained dependency allowlist** — only pinned versions of approved packages:
    - `react` 19.2.4, `react-dom` 19.2.4, `wagmi` 3.4.1, `viem` 2.45.0, `shadcn` 3.7.0, `@tanstack/react-query` 5.90.20
    - Dev: `@vitejs/plugin-react` 5.1.2, `typescript` 5.9.3, `vite` 7.2.4, `@types/react` 19.2.4
 
-2. **Forbidden patterns** — scans `.ts`, `.tsx`, `index.html` for: `fetch(`, `XMLHttpRequest`, `WebSocket`, `import("http`, `http://`, `https://`
+3. **Constrained forbidden patterns** — scans `.ts`, `.tsx`, `index.html` for: `fetch(`, `XMLHttpRequest`, `WebSocket`, `import("http`, `http://`, `https://`
 
-3. **Source properties validation** — `vibefi.json.addresses` must be present and all addresses must be valid EIP-55 checksums
+4. **Source properties validation** — `vibefi.json.addresses` must be present and all addresses must be valid EIP-55 checksums
 
-4. **ABI validation** — all files in `abis/` must be valid JSON
+5. **Constrained ABI validation** — all files in `abis/` must be valid JSON
 
-5. **Manifest generation** — deterministic post-bundle `manifest.json` with sorted file list, byte counts, metadata, and constraint versions
+6. **Manifest generation** — deterministic post-bundle `manifest.json` with sorted file list, byte counts, metadata, and layout (`constrained` or `static-html`)
 
-6. **IPFS publish** — uploads bundle, returns `rootCid` (or `--no-ipfs` for keccak256 hash)
+7. **IPFS publish** — uploads bundle, returns `rootCid` (or `--no-ipfs` for keccak256 hash)
 
 Options: `--constraints <path>` for custom constraint overrides, `--ipfs-api <url>`, `--no-ipfs`, `--no-emit-manifest`.
 

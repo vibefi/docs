@@ -32,6 +32,6 @@ bun install
 - `cli/`: Bun/TypeScript governance and packaging CLI.
 - `client/`: Wry/Rust desktop runtime for approved dapps.
 - `e2e/`: end-to-end validation flow.
-- `dapp-examples/`: constrained frontend examples.
+- `dapp-examples/`: frontend examples (constrained React/Vite + nested static-html `zfi` submodule).
 - `studio/`: governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
 - `packages/shared/`: shared TypeScript utilities.

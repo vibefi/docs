@@ -2,16 +2,21 @@
 title: Dapp Examples
 ---
 
-`dapp-examples/` contains three fully functional reference dapps demonstrating VibeFi packaging constraints and Ethereum interaction patterns.
+`dapp-examples/` contains four reference dapps demonstrating both supported VibeFi bundle layouts and Ethereum interaction patterns.
 
 ## Constraint Model
 
-All examples comply with the [CLI packaging constraints](./cli.md#package):
+Examples comply with one of two [CLI packaging layouts](./cli.md#package):
 
-- **Pinned dependencies only** — React 19.2.4, wagmi 3.4.1, viem 2.45.0, etc.
-- **No network access** — no `fetch()`, `XMLHttpRequest`, `WebSocket`, or HTTP imports
-- **Allowed file types** — `.ts`, `.tsx` (source), `.webp` (assets), `.json` (ABIs), plus build configs
-- **RPC via `window.ethereum`** — all chain interaction goes through the injected provider
+- **Constrained layout** (`aave-v3`, `uniswap-v2`, `safe-admin`)
+  - pinned dependency and devDependency allowlists
+  - source/assets/ABI structure and extension checks
+  - forbidden network patterns in source (`fetch`, XHR, WebSocket, HTTP imports/URLs)
+- **Static-html layout** (`zfi/`)
+  - requires `vibefi.json` and `index.html`
+  - allows only `.html`, `.js`, `.json` files in the packaged tree
+
+All examples rely on injected wallet/RPC interfaces (`window.ethereum`) at runtime.
 
 ## Aave V3
 
@@ -51,6 +56,15 @@ Read-only multisig admin interface (Phase 1). Load a Safe by address, view owner
 
 **Planned phases:** Phase 2 (propose/sign/execute), Phase 3 (owner management), Phase 4 (hardening).
 
+## zFi (Static HTML)
+
+Multi-page static dapp packaged from the nested `zfi/` submodule under `dapp-examples/zfi/dapp`.
+
+**Key patterns:**
+- Ships prebuilt HTML/JS pages without a React/Vite build step
+- Uses checked-in `vibefi.json` for addresses (no generated manifest source file)
+- Validated and bundled through the CLI static-html layout path
+
 ## Common Patterns
 
 **Contract interaction:**
@@ -70,9 +84,20 @@ const receipt = await publicClient.waitForTransactionReceipt({ hash })
 ## Local Development
 
 ```bash
-cd dapp-examples/uniswap-v2  # or aave-v3, safe-admin
+cd dapp-examples
+git submodule sync --recursive
+git submodule update --init --recursive
+
+cd uniswap-v2  # or aave-v3, safe-admin
 bun install
 RPC_URL="https://mainnet.infura.io/v3/YOUR_KEY" bun vite dev
+```
+
+For `zfi`:
+
+```bash
+cd dapp-examples/zfi/dapp
+# static-html app: no package manager install required
 ```
 
 These examples serve as templates for new dapps. Copy the structure, swap ABIs/addresses, and adapt the UI.
