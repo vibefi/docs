@@ -31,7 +31,7 @@ See [Contracts](../components/contracts.md).
 
 Dapp source is packaged deterministically by the CLI:
 
-1. Validate dependencies against allowlist, scan for forbidden patterns
+1. Detect layout and validate rules (`constrained` dependency/pattern checks, or `static-html` file-extension allowlist)
 2. Generate deterministic [manifest.json](../reference/manifest-schema.md) with file hashes
 3. Publish to IPFS, receive `rootCid`
 
@@ -45,10 +45,12 @@ The Rust client provides a secure, sandboxed runtime:
 
 1. **Fetch** approved source from IPFS by `rootCid`
 2. **Verify** every file against `manifest.json`
-3. **Build** locally with injected `package.json` + `vite.config.ts`
+3. **Prepare runtime assets**:
+   - constrained: local Bun/Vite build with injected standard build files
+   - static-html: copy validated files directly (no package manager/build step)
 4. **Serve** over `app://` protocol in sandboxed webview
 5. **Inject** `window.ethereum` (EIP-1193) bridged to wallet backends via [IPC](../reference/ipc-protocol.md)
-6. **Enforce** CSP: `connect-src 'none'` — dapps cannot make outbound HTTP
+6. **Enforce** CSP: no outbound network (`connect-src 'none'`), with layout-specific script policy for compatibility
 
 All external data access is mediated through the injected provider → Rust host → RPC.
 
@@ -63,5 +65,5 @@ See [Client](../components/client.md).
 | `client/` | Deterministic dapp runtime | Rust / Wry |
 | `packages/shared/` | Shared ABIs, config, IPFS, client utilities | TypeScript |
 | `e2e/` | Integrated validation of the full flow | Bun / TypeScript |
-| `dapp-examples/` | Reference dapps demonstrating constraints | React / TypeScript |
+| `dapp-examples/` | Reference dapps demonstrating both constrained and static-html layouts | React / TypeScript + static HTML |
 | `studio/` | Governance studio for proposing, voting, registry inspection, and bundle review | React / Vite |

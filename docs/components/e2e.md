@@ -31,7 +31,7 @@ cd e2e && cp .env.example .env
 
 ## Test Flow
 
-For each of 3 example dapps (Uniswap V2, Aave V3, Safe Admin):
+For each of 5 dapps (`studio`, `uniswap-v2`, `aave-v3`, `safe-admin`, `zfi`):
 
 1. **Package** — `vibefi package` validates, bundles, publishes to IPFS → `rootCid`
 2. **Propose** — `vibefi dapp:propose` creates governance proposal → `txHash`
@@ -44,7 +44,9 @@ For each of 3 example dapps (Uniswap V2, Aave V3, Safe Admin):
 9. **Execute** — `vibefi proposals:execute` triggers `DappRegistry.setDapp()`
 10. **Fetch & verify** — `vibefi dapp:fetch` downloads from IPFS, recomputes CID to verify integrity
 
-After all cycles, `vibefi dapp:list` asserts >= 3 dapps in registry.
+`zfi` is packaged from `dapp-examples/zfi/dapp` using the `static-html` layout.
+
+After all cycles, `vibefi dapp:list` asserts at least 5 dapps in registry.
 
 ## Utilities
 
