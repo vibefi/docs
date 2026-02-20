@@ -18,10 +18,12 @@ title: Governance Agent
 ```bash
 cargo run -- run --profile devnet --rpc-url http://127.0.0.1:8545 --once
 cargo run -- review-once --proposal-id 1 --profile sepolia --rpc-url "$SEPOLIA_RPC_URL"
-cargo run -- doctor --profile sepolia --rpc-url "$SEPOLIA_RPC_URL"
+cargo run -- status --profile sepolia --rpc-url "$SEPOLIA_RPC_URL"
 ```
 
 Default mode is dry-run recommendation only. Auto-vote is opt-in via `--auto-vote` or `GOV_AGENT_AUTO_VOTE=true`.
+
+When running in continuous mode (`cargo run -- run`), the agent emits periodic info logs each cycle (current scan range, no-new-blocks heartbeats, and next poll wait), so operators can confirm it is actively checking chain progress.
 
 ## Transport and chain integration
 
