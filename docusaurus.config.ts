@@ -44,7 +44,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/vibefi-social-banner.jpg',
+    image: 'img/social.webp',
     navbar: {
       title: 'VibeFi',
       logo: {
