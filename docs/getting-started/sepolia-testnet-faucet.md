@@ -6,7 +6,7 @@ import SepoliaTokenBuyer from '@site/src/components/SepoliaTokenBuyer';
 
 The Sepolia token seller is a fixed-price contract that accepts Sepolia ETH and transfers VibeFi testnet tokens (`VFI`) to buyers.
 
-This replaces a faucet-style flow with a simple on-chain buy flow.
+This replaces a faucet-style flow with a simple onchain buy flow.
 
 <details>
 <summary>Browser Buy (wallet)</summary>

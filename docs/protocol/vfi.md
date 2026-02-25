@@ -20,7 +20,7 @@ title: VFI
 - Eligibility is evaluated from governance snapshot voting power (not raw wallet balance).
 - Governance, timelock, and registry interactions are implemented in the protocol contracts.
 
-## Not currently implemented on-chain
+## Not currently implemented onchain
 
 - Proposal bond/stake lock for submission.
 - Proposal slashing outcomes.

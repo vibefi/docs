@@ -45,12 +45,12 @@ DEX interface: swap ETH ↔ ERC-20 tokens with quoting and slippage control.
 
 ## Safe Admin
 
-Read-only multisig admin interface (Phase 1). Load a Safe by address, view owners/threshold/nonce/balance, browse execution history from on-chain logs.
+Read-only multisig admin interface (Phase 1). Load a Safe by address, view owners/threshold/nonce/balance, browse execution history from onchain logs.
 
 **Key patterns:**
 - Safe contract validation via `getVersion()`
 - Parallel multicall for Safe state (`getOwners`, `getThreshold`, `nonce`, `getGuard`, etc.)
-- On-chain history via `ExecutionSuccess` event logs with block-range pagination (50k block chunks)
+- Onchain history via `ExecutionSuccess` event logs with block-range pagination (50k block chunks)
 - ERC-20 transfer decoding from transaction calldata
 - URL param deep linking: `?safe=0x...`
 

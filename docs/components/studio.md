@@ -8,7 +8,7 @@ title: Studio
 
 - Propose `publishDapp` and `upgradeDapp` governance actions
 - Vote, queue, and execute proposals
-- Inspect DappRegistry state from on-chain events
+- Inspect DappRegistry state from onchain events
 - Review bundle manifests/files via the IPFS integration
 - View historical proposals
 

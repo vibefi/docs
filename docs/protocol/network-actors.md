@@ -6,14 +6,11 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 
 ## Core actors
 
-- **Contributors** package frontend bundles under protocol constraints.
-- **Proposers** are contributors or token holders with enough delegated `VFI` voting power to pass proposal-eligibility checks.
-- **DAO members (token holders)** delegate and vote on governance proposals.
-- **Delegates** are token holders trusted by others to represent voting power and provide informed voting judgment; a formal nomination and delegation dapp is planned.
+- **Contributors / DAO members** package and propose frontend bundles under protocol constraints, vote on governance proposals.
+- **Delegates** token holders trusted by others to represent voting power and provide informed voting judgment; a formal nomination and delegation process is planned.
 - **Security Council** is a temporary emergency role intended to be dissolved once governance is sufficiently decentralized.
-- **Gov-agent node operators** run the gov-agent as an always-on node process that watches proposals, decodes dapp actions, reviews bundle risk, and publishes recommendations or submits votes (when auto-vote is enabled).
-- **Other operators** run supporting infra (indexers, monitoring, UI surfaces).
-- **End users** run approved dapps from on-chain registry state in the local client.
+- **Node operators** run [gov-agent](../components/gov-agent.md) nodes as an always-on node process that watches proposals, decodes dapp actions, reviews bundle risk, and publishes recommendations or submits votes.
+- **End users** run approved dapps from onchain registry state in the local client.
 
 ## Gov-agent as a protocol node
 
@@ -22,7 +19,7 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 - In default mode, it runs dry and emits recommendations; vote submission is opt-in and guarded by signer preflight checks.
 - Running multiple independent agent nodes enables diverse review policies and reduces single-operator dependence.
 
-## Proposal eligibility
+## Proposal access
 
 - Proposal creation is not open to every wallet.
 - `VfiGovernor` enforces an `IProposalRequirements` check at propose time.
@@ -34,13 +31,13 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 
 - Current contracts give the Security Council emergency powers in two places:
 - `DappRegistry`: holders of `SECURITY_COUNCIL_ROLE` can pause/unpause/deprecate dapp versions.
-- `VfiTimelock`: deploy flow grants `CANCELLER_ROLE` to the Security Council, allowing cancellation of queued timelock operations.
+- `VfiTimelock`: holders of `CANCELLER_ROLE` can cancel queued timelock operations (granted to Security Council in deployment scripts).
 - These powers can be phased out by DAO governance by revoking the Security Council roles via governance-controlled role admin actions.
 
 ## Trust and accountability
 
 - Governance determines approved dapp versions and protocol parameters.
-- The registry and constraints references are on-chain and auditable.
+- The registry and constraints references are onchain and auditable.
 - Bundles are content-addressed, so the reviewed content is the content users fetch.
 - Runtime policy enforcement happens locally in the client sandbox.
 

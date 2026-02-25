@@ -2,7 +2,7 @@
 title: Contracts
 ---
 
-The `contracts/` directory contains Foundry/Solidity smart contracts implementing on-chain governance, a dapp registry, and build constraints storage. Built on OpenZeppelin 5.4.
+The `contracts/` directory contains Foundry/Solidity smart contracts implementing onchain governance, a dapp registry, and build constraints storage. Built on OpenZeppelin 5.4.
 
 ## Contract Inventory
 
@@ -36,7 +36,7 @@ Thin wrapper around OZ `TimelockController`.
 
 ### DappRegistry (176 lines)
 
-Stores dapp versions on-chain. Each version holds a `rootCid` (bytes), status, proposer, and timestamp.
+Stores dapp versions onchain. Each version holds a `rootCid` (bytes), status, proposer, and timestamp.
 
 **Version lifecycle:**
 
@@ -54,7 +54,7 @@ Human-readable metadata (name, version, description) is emitted as `DappMetadata
 
 ### ConstraintsRegistry (31 lines)
 
-Maps `constraintsId (bytes32) → rootCid (bytes)`. Governance-only updates. Used by CLI and Client to anchor build constraints without on-chain policy logic.
+Maps `constraintsId (bytes32) → rootCid (bytes)`. Governance-only updates. Used by CLI and Client to anchor build constraints without onchain policy logic.
 
 ### MinimumDelegationRequirement (27 lines)
 
@@ -91,7 +91,7 @@ Starts Anvil, deploys all contracts, writes `.devnet/devnet.json` with addresses
 | 0 | Developer/deployer | Remaining supply |
 | 1 | Voter 1 | 100k VFI |
 | 2 | Voter 2 | 100k VFI |
-| 3 | Security Council 1 | 50k VFI (assigned on-chain) |
+| 3 | Security Council 1 | 50k VFI (assigned onchain) |
 | 4 | Security Council 2 | 50k VFI (funded, not assigned) |
 
 **Default devnet parameters** (configurable via env vars):

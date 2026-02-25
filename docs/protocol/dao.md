@@ -11,7 +11,7 @@ The DAO can support protocol operations through governance-controlled revenue me
 Per-transaction frontend fee path:
 
 - A router contract charges a small fee in native token (example target: `0.00001 ETH` per transaction).
-- The collected fee is forwarded to an on-chain fee splitter.
+- The collected fee is forwarded to an onchain fee splitter.
 - The fee splitter is linked to `DappRegistry` so distribution can follow currently approved vapp metadata.
 - Split configuration is updated through governance, in the same proposal lifecycle as app/registry updates.
 - The splitter can route shares to DAO treasury and creator recipients, with creator kickbacks based on contribution policy.
@@ -36,6 +36,6 @@ Subscription path:
 
 ## Implementation notes
 
-- Keep fee logic on-chain and deterministic to minimize off-chain trust.
+- Keep fee logic onchain and deterministic to minimize off-chain trust.
 - Emit events for fee collection and split distribution so indexers can produce transparent accounting.
-- Align client behavior with on-chain policy: client-side checks should only gate UX, not replace contract enforcement.
+- Align client behavior with onchain policy: client-side checks should only gate UX, not replace contract enforcement.
