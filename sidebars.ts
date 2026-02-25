@@ -22,6 +22,16 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Protocol',
+      items: [
+        'protocol/overview',
+        'protocol/network-actors',
+        'protocol/vfi',
+        'protocol/dao',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Components',
       items: [
         'components/contracts',

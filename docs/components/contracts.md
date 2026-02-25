@@ -24,11 +24,15 @@ OpenZeppelin Governor stack: `GovernorSettings` + `GovernorCountingSimple` (For/
 
 Extensions:
 - **Pluggable proposal eligibility** via `IProposalRequirements`. Governance can swap the implementation with `setProposalRequirements()`.
-- **Security Council veto**: `vetoProposal()` cancels any active proposal. Council address updatable via `setSecurityCouncil()`.
+- **Role-based cancellation path via Timelock**: queued operations can be canceled by `CANCELLER_ROLE` on `VfiTimelock` (granted to Security Council in deploy scripts).
 
 ### VfiTimelock (10 lines)
 
-Thin wrapper around OZ `TimelockController`. Governor holds `PROPOSER_ROLE`, execution is open (`address(0)` has `EXECUTOR_ROLE`).
+Thin wrapper around OZ `TimelockController`.
+
+- Governor holds `PROPOSER_ROLE`.
+- Execution is open (`address(0)` has `EXECUTOR_ROLE`).
+- Security Council is granted `CANCELLER_ROLE` in deployment scripts.
 
 ### DappRegistry (176 lines)
 
@@ -68,7 +72,7 @@ Queue to Timelock → queue()
 Execute → execute() (anyone can call)
 ```
 
-At any point before execution, the Security Council can `vetoProposal()` to cancel.
+After queueing and before execution, `CANCELLER_ROLE` can cancel queued timelock operations.
 
 ## Deployment
 
@@ -120,12 +124,12 @@ Three test suites:
 
 - **DappRegistry.t.sol**: Unit tests for publish, upgrade, pause/unpause
 - **VfiTokenSeller.t.sol**: Unit tests for purchase flow, slippage checks, ownership controls, and withdrawals
-- **GovernanceIntegration.t.sol**: Full governance cycles — propose, vote, queue, execute, veto, upgrade, deprecate, constraints update
+- **GovernanceIntegration.t.sol**: Full governance cycles — propose, vote, queue, execute, timelock cancel, upgrade, deprecate, constraints update
 
 Tests use `DeployVibeFi.deploy()` to mirror production deployment, plus Forge cheatcodes (`vm.prank`, `vm.warp`, `vm.expectEmit`).
 
 ## Known Limitations
 
-1. **Security Council rotation** requires updating both `VfiGovernor.setSecurityCouncil()` AND manually granting roles on `DappRegistry`/`ConstraintsRegistry`. These are separate operations.
+1. **Security Council rotation/removal** is role-based. Update `SECURITY_COUNCIL_ROLE` on `DappRegistry` and `CANCELLER_ROLE` on `VfiTimelock`. Governance can remove Security Council by revoking these roles and not granting a replacement.
 2. **Deprecated is terminal** — cannot be reversed.
 3. **Metadata is event-only** — must be indexed off-chain to query.
