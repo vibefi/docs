@@ -23,7 +23,7 @@ Onchain governance decides which dapps are approved:
 - **VfiGovernor** + **VfiTimelock** — proposal → vote → queue → execute lifecycle with configurable delays
 - **[DappRegistry](../components/contracts.md)** — canonical store of approved dapp versions (`rootCid`, status)
 - **ConstraintsRegistry** — governance-updatable build constraint references
-- **[Security Council](../protocol/network-actors.md)** — emergency veto, pause, and deprecation powers
+- **[Security Council](../protocol/network-actors.md)** — can cancel queued operations, pause, and deprecate
 
 See [Contracts](../components/contracts.md).
 

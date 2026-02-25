@@ -78,5 +78,5 @@ cargo run -- --bundle ../cli/.vibefi/cache/<rootCid>
 
 - Proposal eligibility is contract-enforced.
 - Governance executes through timelock.
-- Security Council can pause/deprecate and veto proposals.
+- Security Council can pause/deprecate and cancel queued operations.
 - [Client](../components/client.md) runtime prevents arbitrary network exfiltration from frontend bundles.

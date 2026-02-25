@@ -7,7 +7,7 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 ## Core actors
 
 - **Contributors / [DAO](./dao.md) members** package and propose frontend bundles under protocol constraints, vote on governance proposals.
-- **Delegates** token holders trusted by others to represent voting power and provide informed voting judgment; a formal nomination and delegation process is planned.
+- **Delegates** are token holders trusted by others to represent voting power and provide informed voting judgment; a formal nomination and delegation process is planned.
 - **Security Council** is a temporary emergency role intended to be dissolved once governance is sufficiently decentralized.
 - **Node operators** run [gov-agent](../components/gov-agent.md) nodes as an always-on node process that watches proposals, decodes dapp actions, reviews bundle risk, and publishes recommendations or submits votes.
 - **End users** run approved dapps from onchain registry state in the local [client](../components/client.md).
