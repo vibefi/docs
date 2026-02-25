@@ -36,7 +36,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'components/contracts',
         'components/cli',
-        'components/governance-agent',
+        'components/gov-agent',
         'components/client',
         'components/packages',
         'components/e2e',

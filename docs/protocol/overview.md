@@ -10,7 +10,7 @@ The VibeFi protocol coordinates three layers:
 
 This section explains who participates in that system, how incentives align, and how `VFI` supports governance and protocol operations.
 
-An important operational actor is the governance-agent node, which monitors governance proposals and provides review/voting automation for operators.
+An important operational actor is the gov-agent node, which monitors governance proposals and provides review/voting automation for operators.
 
 `VFI` (VibeFi) is the native protocol governance token.
 

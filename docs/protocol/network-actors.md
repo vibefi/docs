@@ -11,13 +11,13 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 - **DAO members (token holders)** delegate and vote on governance proposals.
 - **Delegates** are token holders trusted by others to represent voting power and provide informed voting judgment; a formal nomination and delegation dapp is planned.
 - **Security Council** is a temporary emergency role intended to be dissolved once governance is sufficiently decentralized.
-- **Governance-agent node operators** run the governance agent as an always-on node process that watches proposals, decodes dapp actions, reviews bundle risk, and publishes recommendations or submits votes (when auto-vote is enabled).
+- **Gov-agent node operators** run the gov-agent as an always-on node process that watches proposals, decodes dapp actions, reviews bundle risk, and publishes recommendations or submits votes (when auto-vote is enabled).
 - **Other operators** run supporting infra (indexers, monitoring, UI surfaces).
 - **End users** run approved dapps from on-chain registry state in the local client.
 
-## Governance agent as a protocol node
+## Gov-agent as a protocol node
 
-- The governance agent is effectively the protocol's decision-support node in production operations.
+- The gov-agent is effectively the protocol's decision-support node in production operations.
 - It continuously scans `VfiGovernor` proposal events, decodes publish/upgrade calldata, and fetches referenced bundles from IPFS for review.
 - In default mode, it runs dry and emits recommendations; vote submission is opt-in and guarded by signer preflight checks.
 - Running multiple independent agent nodes enables diverse review policies and reduces single-operator dependence.
@@ -47,6 +47,6 @@ VibeFi has a set of protocol actors with distinct responsibilities.
 ## Related docs
 
 - [Contracts](../components/contracts.md)
-- [Governance Agent](../components/governance-agent.md)
+- [Gov Agent](../components/gov-agent.md)
 - [Governance Lifecycle](../workflows/governance-lifecycle.md)
 - [Architecture Overview](../architecture/overview.md)
