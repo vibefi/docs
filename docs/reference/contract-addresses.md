@@ -4,6 +4,8 @@ title: Contract Addresses
 
 Deployed contract addresses by network.
 
+For contract roles and behavior, see [Contracts](../components/contracts.md).
+
 ## Sepolia
 
 - Chain ID: `11155111`

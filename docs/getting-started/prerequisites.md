@@ -28,10 +28,10 @@ bun install
 
 ## Repo map
 
-- `contracts/`: Solidity governance and registry contracts.
-- `cli/`: Bun/TypeScript governance and packaging CLI.
-- `client/`: Wry/Rust desktop runtime for approved dapps.
-- `e2e/`: end-to-end validation flow.
-- `dapp-examples/`: frontend examples (constrained React/Vite + nested static-html `zfi` submodule).
-- `studio/`: governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
-- `packages/shared/`: shared TypeScript utilities.
+- [`contracts/`](../components/contracts.md): Solidity governance and registry contracts.
+- [`cli/`](../components/cli.md): Bun/TypeScript governance and packaging CLI.
+- [`client/`](../components/client.md): Wry/Rust desktop runtime for approved dapps.
+- [`e2e/`](../components/e2e.md): end-to-end validation flow.
+- [`dapp-examples/`](../components/dapp-examples.md): frontend examples (constrained React/Vite + nested static-html `zfi` submodule).
+- [`studio/`](../components/studio.md): governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
+- [`packages/shared/`](../components/packages.md): shared TypeScript utilities.

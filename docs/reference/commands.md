@@ -4,6 +4,8 @@ title: Command Reference
 
 Quick reference for all build/run commands across the monorepo.
 
+Component docs: [Contracts](../components/contracts.md), [CLI](../components/cli.md), [Client](../components/client.md), and [E2E](../components/e2e.md).
+
 ## Root Monorepo
 
 ```bash

@@ -22,11 +22,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Protocol',
+      items: [
+        'protocol/overview',
+        'protocol/network-actors',
+        'protocol/vfi',
+        'protocol/dao',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Components',
       items: [
         'components/contracts',
         'components/cli',
-        'components/governance-agent',
+        'components/gov-agent',
         'components/client',
         'components/packages',
         'components/e2e',

@@ -9,12 +9,12 @@ If you want to use VibeFi as an end user, go to [vibefi.dev/download](https://vi
 VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 
 1. Contributors package frontend code under [strict build constraints](./components/cli.md#package).
-2. A [governance proposal](./workflows/governance-lifecycle.md) publishes or upgrades a dapp version on-chain.
+2. A [governance proposal](./workflows/governance-lifecycle.md) publishes or upgrades a dapp version onchain.
 3. Approved bundle roots are stored in the [DappRegistry](./components/contracts.md) and content is fetched from IPFS.
 4. End users run approved dapps in the [VibeFi client](./components/client.md) runtime — sandboxed, locally built, with no outbound HTTP.
 
 Start with [Prerequisites](./getting-started/prerequisites.md) and [Local Stack](./getting-started/local-stack.md), review [Contributing](./getting-started/contributing.md), then explore [Architecture](./architecture/overview.md) and component docs.
 
 :::tip Need Sepolia test funds?
-Use the [Sepolia Testnet Faucet](./getting-started/sepolia-testnet-faucet.md) to buy VFI testnet tokens and get started quickly.
+Use the [Sepolia Testnet Faucet](./getting-started/sepolia-testnet-faucet.md) to buy [VFI](./protocol/vfi.md) testnet tokens and get started quickly.
 :::

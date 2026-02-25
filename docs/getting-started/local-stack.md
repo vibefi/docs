@@ -22,7 +22,7 @@ cd contracts
 ./script/local-devnet.sh
 ```
 
-This writes `contracts/.devnet/devnet.json` used by CLI and client flows.
+This writes `contracts/.devnet/devnet.json` used by [CLI](../components/cli.md) and [client](../components/client.md) flows.
 
 ## 3. Install and check CLI
 

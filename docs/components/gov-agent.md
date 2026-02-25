@@ -1,8 +1,8 @@
 ---
-title: Governance Agent
+title: Gov Agent
 ---
 
-`governance-agent/` is a Rust process that watches `VfiGovernor` proposals, decodes dapp publish/upgrade actions, reviews proposal bundles, and emits vote recommendations or submits votes.
+`gov-agent/` is a Rust process that watches [`VfiGovernor`](./contracts.md) proposals, decodes dapp publish/upgrade actions, reviews proposal bundles, and emits vote recommendations or submits votes.
 
 ## Core behavior
 
@@ -56,7 +56,7 @@ Thresholds are numeric and can be configured directly:
 
 ## IPFS cache behavior
 
-By default, governance-agent stores CID bundles under `~/.cache/VibeFi`, matching the client cache root. This allows reuse when both services run on the same machine.
+By default, gov-agent stores CID bundles under `~/.cache/VibeFi`, matching the client cache root. This allows reuse when both services run on the same machine.
 
 Why this works:
 
@@ -65,7 +65,7 @@ Why this works:
 
 Operational caveat:
 
-- concurrent writes are possible; governance-agent uses atomic file writes to avoid partial-file corruption
+- concurrent writes are possible; gov-agent uses atomic file writes to avoid partial-file corruption
 
 ## Docker and CI
 

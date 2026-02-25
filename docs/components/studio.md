@@ -2,13 +2,13 @@
 title: Studio
 ---
 
-`studio/` is the governance-facing web app for proposal workflows, voting, registry visibility, and bundle review.
+`studio/` is the governance-facing web app for [Governance Lifecycle](../workflows/governance-lifecycle.md) workflows, voting, registry visibility, and bundle review.
 
 ## Current Role
 
 - Propose `publishDapp` and `upgradeDapp` governance actions
 - Vote, queue, and execute proposals
-- Inspect DappRegistry state from on-chain events
+- Inspect DappRegistry state from onchain events
 - Review bundle manifests/files via the IPFS integration
 - View historical proposals
 

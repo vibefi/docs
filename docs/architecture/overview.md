@@ -2,7 +2,7 @@
 title: Architecture Overview
 ---
 
-VibeFi splits trust between on-chain governance, content addressing, and local runtime execution. No single party controls what code users run.
+VibeFi splits trust between [onchain governance](../protocol/overview.md), content addressing, and local runtime execution. No single party controls what code users run.
 
 ## End-to-End Flow
 
@@ -11,37 +11,37 @@ Developer → CLI package → IPFS publish → rootCid
     ↓
 CLI dapp:propose → VfiGovernor proposal → vote → queue → execute
     ↓
-DappRegistry stores rootCid on-chain
+DappRegistry stores rootCid onchain
     ↓
 Client reads registry → fetches from IPFS → verifies manifest → builds locally → serves in sandboxed webview
 ```
 
 ## Control Plane (Contracts)
 
-On-chain governance decides which dapps are approved:
+Onchain governance decides which dapps are approved:
 
 - **VfiGovernor** + **VfiTimelock** — proposal → vote → queue → execute lifecycle with configurable delays
-- **DappRegistry** — canonical store of approved dapp versions (`rootCid`, status)
+- **[DappRegistry](../components/contracts.md)** — canonical store of approved dapp versions (`rootCid`, status)
 - **ConstraintsRegistry** — governance-updatable build constraint references
-- **Security Council** — emergency veto, pause, and deprecation powers
+- **[Security Council](../protocol/network-actors.md)** — can cancel queued operations, pause, and deprecate
 
 See [Contracts](../components/contracts.md).
 
 ## Data Plane (CLI + IPFS)
 
-Dapp source is packaged deterministically by the CLI:
+Dapp source is packaged deterministically by the [CLI](../components/cli.md):
 
 1. Detect layout and validate rules (`constrained` dependency/pattern checks, or `static-html` file-extension allowlist)
 2. Generate deterministic [manifest.json](../reference/manifest-schema.md) with file hashes
 3. Publish to IPFS, receive `rootCid`
 
-Only `rootCid` is stored on-chain. Human-readable metadata emitted as events for off-chain indexing.
+Only `rootCid` is stored onchain. Human-readable metadata emitted as events for off-chain indexing.
 
 See [CLI](../components/cli.md).
 
 ## Execution Plane (Client)
 
-The Rust client provides a secure, sandboxed runtime:
+The Rust [client](../components/client.md) provides a secure, sandboxed runtime:
 
 1. **Fetch** approved source from IPFS by `rootCid`
 2. **Verify** every file against `manifest.json`

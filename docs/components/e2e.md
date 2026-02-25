@@ -2,7 +2,7 @@
 title: E2E
 ---
 
-`e2e/` validates the full integrated path: package → IPFS publish → governance proposal → vote → queue → execute → fetch → verify.
+`e2e/` validates the full integrated path: package → IPFS publish → governance proposal → vote → queue → execute → fetch → verify (see [Governance Lifecycle](../workflows/governance-lifecycle.md)).
 
 ## Infrastructure
 
@@ -10,7 +10,7 @@ The test runner manages:
 
 - **Anvil** — local EVM, started fresh (kills prior instances, removes stale `devnet.json`)
 - **IPFS** — Docker container via `docker-compose.ipfs.yml`
-- **Contracts** — deployed via `contracts/script/local-devnet.sh`
+- **[Contracts](./contracts.md)** — deployed via `contracts/script/local-devnet.sh`
 
 Health checks poll for RPC availability (30s timeout), IPFS API (8s), and contract deployment (120s, checks governor bytecode).
 

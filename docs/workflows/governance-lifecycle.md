@@ -8,7 +8,7 @@ This is the end-to-end operational flow for publishing a new dapp version.
 
 - Start local IPFS.
 - Start contracts devnet.
-- Ensure CLI ABIs are refreshed.
+- Ensure [CLI](../components/cli.md) ABIs are refreshed.
 
 ## 2. Package dapp content
 
@@ -78,5 +78,5 @@ cargo run -- --bundle ../cli/.vibefi/cache/<rootCid>
 
 - Proposal eligibility is contract-enforced.
 - Governance executes through timelock.
-- Security Council can pause/deprecate and veto proposals.
-- Client runtime prevents arbitrary network exfiltration from frontend bundles.
+- Security Council can pause/deprecate and cancel queued operations.
+- [Client](../components/client.md) runtime prevents arbitrary network exfiltration from frontend bundles.
