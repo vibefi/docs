@@ -33,6 +33,7 @@ title: VFI
 
 - Proposal bond/stake lock for submission.
 - Proposal slashing outcomes.
+- Proposed protocol/frontend fee mechanisms (for example per-transaction frontend fees and subscription-based fee bypass), as outlined in [DAO](./dao.md).
 
 These mechanisms are potential future governance designs and remain under active development.
 
