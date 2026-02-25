@@ -2,7 +2,7 @@
 title: Client
 ---
 
-The `client/` repo is a Rust desktop app (Wry/Tao) that fetches, verifies, builds, and runs VibeFi dapps in sandboxed webviews.
+The `client/` repo is a Rust desktop app (Wry/Tao) that fetches, verifies, builds, and runs VibeFi dapps in sandboxed webviews. IPC message contracts are documented in [IPC Protocol](../reference/ipc-protocol.md).
 
 ## Architecture
 

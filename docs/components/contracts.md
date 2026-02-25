@@ -2,13 +2,13 @@
 title: Contracts
 ---
 
-The `contracts/` directory contains Foundry/Solidity smart contracts implementing onchain governance, a dapp registry, and build constraints storage. Built on OpenZeppelin 5.4.
+The `contracts/` directory contains Foundry/Solidity smart contracts implementing [onchain governance](../protocol/overview.md), a dapp registry, and build constraints storage. Built on OpenZeppelin 5.4.
 
 ## Contract Inventory
 
 ### VfiToken (21 lines)
 
-ERC20 + ERC20Votes. Constructor mints initial supply to a designated holder. Holders must self-delegate to activate voting power.
+ERC20 + ERC20Votes. Constructor mints initial supply of [VFI](../protocol/vfi.md) to a designated holder. Holders must self-delegate to activate voting power.
 
 ### VfiTokenSeller (102 lines)
 

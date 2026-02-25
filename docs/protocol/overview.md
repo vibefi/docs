@@ -8,7 +8,7 @@ The VibeFi protocol coordinates three layers:
 2. Content-addressed application distribution via IPFS.
 3. Local sandboxed execution in the client runtime.
 
-`VFI` (VibeFi) is the native protocol governance token.
+[`VFI`](./vfi.md) (VibeFi) is the native protocol governance token.
 
 This section explains who participates in that system, how incentives align, and how `VFI` supports governance and protocol operations.
 

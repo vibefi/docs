@@ -2,7 +2,7 @@
 title: Studio
 ---
 
-`studio/` is the governance-facing web app for proposal workflows, voting, registry visibility, and bundle review.
+`studio/` is the governance-facing web app for [Governance Lifecycle](../workflows/governance-lifecycle.md) workflows, voting, registry visibility, and bundle review.
 
 ## Current Role
 

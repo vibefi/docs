@@ -2,7 +2,7 @@
 title: Shared Packages
 ---
 
-`packages/shared/` (`@vibefi/shared`) is a TypeScript utility library used by the CLI and E2E test suite. No build step — exports directly from TypeScript source via Bun workspace resolution.
+`packages/shared/` (`@vibefi/shared`) is a TypeScript utility library used by the [CLI](./cli.md) and [E2E](./e2e.md) test suite. No build step — exports directly from TypeScript source via Bun workspace resolution.
 
 ## Modules
 

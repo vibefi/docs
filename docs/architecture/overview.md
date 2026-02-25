@@ -2,7 +2,7 @@
 title: Architecture Overview
 ---
 
-VibeFi splits trust between onchain governance, content addressing, and local runtime execution. No single party controls what code users run.
+VibeFi splits trust between [onchain governance](../protocol/overview.md), content addressing, and local runtime execution. No single party controls what code users run.
 
 ## End-to-End Flow
 
@@ -21,15 +21,15 @@ Client reads registry → fetches from IPFS → verifies manifest → builds loc
 Onchain governance decides which dapps are approved:
 
 - **VfiGovernor** + **VfiTimelock** — proposal → vote → queue → execute lifecycle with configurable delays
-- **DappRegistry** — canonical store of approved dapp versions (`rootCid`, status)
+- **[DappRegistry](../components/contracts.md)** — canonical store of approved dapp versions (`rootCid`, status)
 - **ConstraintsRegistry** — governance-updatable build constraint references
-- **Security Council** — emergency veto, pause, and deprecation powers
+- **[Security Council](../protocol/network-actors.md)** — emergency veto, pause, and deprecation powers
 
 See [Contracts](../components/contracts.md).
 
 ## Data Plane (CLI + IPFS)
 
-Dapp source is packaged deterministically by the CLI:
+Dapp source is packaged deterministically by the [CLI](../components/cli.md):
 
 1. Detect layout and validate rules (`constrained` dependency/pattern checks, or `static-html` file-extension allowlist)
 2. Generate deterministic [manifest.json](../reference/manifest-schema.md) with file hashes
@@ -41,7 +41,7 @@ See [CLI](../components/cli.md).
 
 ## Execution Plane (Client)
 
-The Rust client provides a secure, sandboxed runtime:
+The Rust [client](../components/client.md) provides a secure, sandboxed runtime:
 
 1. **Fetch** approved source from IPFS by `rootCid`
 2. **Verify** every file against `manifest.json`

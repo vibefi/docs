@@ -2,7 +2,7 @@
 title: CLI
 ---
 
-The `cli/` package is a Bun/TypeScript tool for packaging dapps, interacting with governance, and managing the VibeFi registry. Built with Commander.js and Viem.
+The `cli/` package is a Bun/TypeScript tool for packaging dapps, interacting with governance, and managing the VibeFi registry. Built with Commander.js and Viem. See [Governance Lifecycle](../workflows/governance-lifecycle.md) for end-to-end proposal operations.
 
 ## Commands
 

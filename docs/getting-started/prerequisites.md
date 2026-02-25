@@ -35,3 +35,5 @@ bun install
 - `dapp-examples/`: frontend examples (constrained React/Vite + nested static-html `zfi` submodule).
 - `studio/`: governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
 - `packages/shared/`: shared TypeScript utilities.
+
+See [Contracts](../components/contracts.md), [CLI](../components/cli.md), [Client](../components/client.md), [E2E](../components/e2e.md), [Dapp Examples](../components/dapp-examples.md), [Studio](../components/studio.md), and [Shared Packages](../components/packages.md).

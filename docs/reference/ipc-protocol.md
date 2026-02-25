@@ -2,7 +2,7 @@
 title: IPC Protocol
 ---
 
-The VibeFi client bridges dapp JavaScript and the Rust host via JSON-based IPC over Wry's `window.ipc.postMessage`. Dapps have no direct network or key access — all sensitive operations go through this bridge.
+The VibeFi [client](../components/client.md) bridges dapp JavaScript and the Rust host via JSON-based IPC over Wry's `window.ipc.postMessage`. Dapps have no direct network or key access — all sensitive operations go through this bridge.
 
 ## Request
 

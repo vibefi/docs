@@ -2,7 +2,7 @@
 title: Gov Agent
 ---
 
-`gov-agent/` is a Rust process that watches `VfiGovernor` proposals, decodes dapp publish/upgrade actions, reviews proposal bundles, and emits vote recommendations or submits votes.
+`gov-agent/` is a Rust process that watches [`VfiGovernor`](./contracts.md) proposals, decodes dapp publish/upgrade actions, reviews proposal bundles, and emits vote recommendations or submits votes.
 
 ## Core behavior
 

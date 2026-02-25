@@ -16,5 +16,5 @@ VibeFi is a decentralized governance and hosting protocol for DeFi frontends.
 Start with [Prerequisites](./getting-started/prerequisites.md) and [Local Stack](./getting-started/local-stack.md), review [Contributing](./getting-started/contributing.md), then explore [Architecture](./architecture/overview.md) and component docs.
 
 :::tip Need Sepolia test funds?
-Use the [Sepolia Testnet Faucet](./getting-started/sepolia-testnet-faucet.md) to buy VFI testnet tokens and get started quickly.
+Use the [Sepolia Testnet Faucet](./getting-started/sepolia-testnet-faucet.md) to buy [VFI](./protocol/vfi.md) testnet tokens and get started quickly.
 :::

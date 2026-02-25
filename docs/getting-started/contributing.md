@@ -2,7 +2,7 @@
 title: Contributing
 ---
 
-Developers can get involved in the VibeFi DAO by reading [open issues across the VibeFi repositories](https://github.com/search?q=org%3Avibefi+is%3Aopen&type=issues) and picking one to work on.
+Developers can get involved in the VibeFi [DAO](../protocol/dao.md) by reading [open issues across the VibeFi repositories](https://github.com/search?q=org%3Avibefi+is%3Aopen&type=issues) and picking one to work on.
 
 If you want a bigger challenge, check the monorepo issue tracker:
 
