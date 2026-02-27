@@ -10,6 +10,7 @@ title: Gov Agent
 - Decodes dapp proposal calldata (`publishDapp`, `upgradeDapp`)
 - Fetches bundle files from IPFS
 - Runs lightweight static checks + LLM review (OpenAI, Anthropic, Ollama)
+- Enriches LLM review context with bundle file index + bounded text content snapshot
 - Produces `for` / `against` / `abstain` decisions with numeric confidence thresholds
 - Submits `castVoteWithReason` when auto-vote is explicitly enabled
 
@@ -50,7 +51,7 @@ Thresholds are numeric and can be configured directly:
 
 `decision.profile` is only an alias for preset numeric values:
 
-- `conservative` -> approve `0.90`, reject `0.30`
+- `conservative` -> approve `0.80`, reject `0.30`
 - `balanced` -> approve `0.75`, reject `0.25`
 - `aggressive` -> approve `0.60`, reject `0.20`
 
