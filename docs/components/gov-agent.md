@@ -9,7 +9,7 @@ title: Gov Agent
 - Watches `ProposalCreated` on `VfiGovernor`
 - Decodes dapp proposal calldata (`publishDapp`, `upgradeDapp`)
 - Fetches bundle files from IPFS
-- Runs lightweight static checks + LLM review (OpenAI, Anthropic, OpenCode-compatible)
+- Runs lightweight static checks + LLM review (OpenAI, Anthropic, Ollama)
 - Produces `for` / `against` / `abstain` decisions with numeric confidence thresholds
 - Submits `castVoteWithReason` when auto-vote is explicitly enabled
 
