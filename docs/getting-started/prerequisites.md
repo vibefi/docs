@@ -35,7 +35,7 @@ bun install
 - [`e2e/`](../components/e2e.md): end-to-end validation flow.
 - [`dapp-examples/`](../components/dapp-examples.md): frontend examples (constrained React/Vite + nested static-html `zfi` submodule).
 - [`studio/`](../components/studio.md): governance studio app (see `studio/README.md`, `studio/design.md`, `studio/plan.md`).
-- [`ipfs-relay/`](../components/ipfs-relay.md): local IPFS helper service used by integration flows.
+- [`ipfs-relay/`](../components/ipfs-relay.md): Rust/Axum upload relay that validates bundles, pins to Kubo, and queues provider replication.
 - [`lander/`](../components/lander.md): landing page site.
 - [`docs/`](../components/docs.md): Docusaurus documentation site.
 - [`packages/shared/`](../components/packages.md): shared TypeScript utilities.

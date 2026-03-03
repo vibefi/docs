@@ -68,6 +68,6 @@ See [Client](../components/client.md).
 | `e2e/` | Integrated validation of the full flow | Bun / TypeScript |
 | `dapp-examples/` | Reference dapps demonstrating both constrained and static-html layouts | React / TypeScript + static HTML |
 | `studio/` | Governance studio for proposing, voting, registry inspection, and bundle review | React / Vite |
-| `ipfs-relay/` | IPFS relay support for local networking and integration workflows | TypeScript / Node.js |
+| `ipfs-relay/` | Bundle upload relay with package validation, Kubo pinning, and async provider replication | Rust / Axum |
 | `lander/` | Public-facing landing page | React / Vite |
 | `docs/` | Documentation site and architecture/protocol reference | Docusaurus / TypeScript |
