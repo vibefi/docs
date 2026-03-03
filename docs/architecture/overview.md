@@ -64,6 +64,10 @@ See [Client](../components/client.md).
 | `cli/` | Packaging + governance operator interface | Bun / TypeScript |
 | `client/` | Deterministic dapp runtime | Rust / Wry |
 | `packages/shared/` | Shared ABIs, config, IPFS, client utilities | TypeScript |
+| `gov-agent/` | Proposal watcher/reviewer with optional automated voting | Rust |
 | `e2e/` | Integrated validation of the full flow | Bun / TypeScript |
 | `dapp-examples/` | Reference dapps demonstrating both constrained and static-html layouts | React / TypeScript + static HTML |
 | `studio/` | Governance studio for proposing, voting, registry inspection, and bundle review | React / Vite |
+| `ipfs-relay/` | IPFS relay support for local networking and integration workflows | TypeScript / Node.js |
+| `lander/` | Public-facing landing page | React / Vite |
+| `docs/` | Documentation site and architecture/protocol reference | Docusaurus / TypeScript |
