@@ -42,6 +42,9 @@ const sidebars: SidebarsConfig = {
         'components/e2e',
         'components/dapp-examples',
         'components/studio',
+        'components/ipfs-relay',
+        'components/lander',
+        'components/docs',
       ],
     },
     {
