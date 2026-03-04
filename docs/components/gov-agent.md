@@ -14,6 +14,20 @@ title: Gov Agent
 - Produces `for` / `against` / `abstain` decisions with numeric confidence thresholds
 - Submits `castVoteWithReason` when auto-vote is explicitly enabled
 
+## Bundle review signals
+
+- Deterministic review starts from a high-trust baseline (`0.9` on the successful manifest-fetch path).
+- `vibefi.json` is required and missing it lowers score.
+- `manifest.json` presence is checked directly in the bundle CID directory (not inferred from `manifest.files`).
+- Presence of `package.json` is treated as a critical signal and applies a heavy penalty (`-0.5`).
+- Source token scanning still flags risky patterns (`eval`, `child_process`, insecure HTTP URLs).
+
+## LLM prompt context shaping
+
+- Bundle text included in LLM prompts is minified by default (`review.minify_bundle_text = true`).
+- Minification removes indentation and empty lines, while preserving code tokens/identifiers.
+- Disable via config (`review.minify_bundle_text = false`) or env (`GOV_AGENT_MINIFY_BUNDLE_TEXT=false`).
+
 ## Run modes
 
 ```bash
