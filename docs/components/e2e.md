@@ -72,3 +72,15 @@ cd e2e && bun run e2e --sepolia
 ```
 
 Anvil is left running after tests for manual inspection.
+
+## Gov-agent test bundles
+
+You can publish targeted security fixtures to validate gov-agent review behavior without running the full E2E suite.
+
+```bash
+cd e2e
+bun run publish:test-bundle red_team_vapp
+bun run publish:test-bundle malicious_uniswapv2
+```
+
+This creates governance proposals designed for fast gov-agent pickup checks.

@@ -14,6 +14,20 @@ title: Gov Agent
 - Produces `for` / `against` / `abstain` decisions with numeric confidence thresholds
 - Submits `castVoteWithReason` when auto-vote is explicitly enabled
 
+## Bundle review signals
+
+- Deterministic review starts from a high-trust baseline (`0.9` on the successful manifest-fetch path).
+- `vibefi.json` is required and missing it lowers score.
+- `manifest.json` presence is checked directly in the bundle CID directory (not inferred from `manifest.files`).
+- Presence of `package.json` is treated as a critical signal and applies a heavy penalty (`-0.5`).
+- Source token scanning still flags risky patterns (`eval`, `child_process`, insecure HTTP URLs).
+
+## LLM prompt context shaping
+
+- Bundle text included in LLM prompts is minified by default (`review.minify_bundle_text = true`).
+- Minification removes indentation and empty lines, while preserving code tokens/identifiers.
+- Disable via config (`review.minify_bundle_text = false`) or env (`GOV_AGENT_MINIFY_BUNDLE_TEXT=false`).
+
 ## Run modes
 
 ```bash
@@ -25,6 +39,25 @@ cargo run -- status --profile sepolia --rpc-url "$SEPOLIA_RPC_URL"
 Default mode is dry-run recommendation only. Auto-vote is opt-in via `--auto-vote` or `GOV_AGENT_AUTO_VOTE=true`.
 
 When running in continuous mode (`cargo run -- run`), the agent emits periodic info logs each cycle (current scan range, no-new-blocks heartbeats, and next poll wait), so operators can confirm it is actively checking chain progress.
+
+## Test with e2e bundles
+
+Use the `e2e` helper to quickly publish known test bundles and verify gov-agent pickup behavior.
+
+In one terminal, run gov-agent:
+
+```bash
+cd gov-agent
+cargo run -- run --profile devnet --rpc-url http://127.0.0.1:8545
+```
+
+In another terminal, publish a test bundle proposal:
+
+```bash
+cd e2e
+bun run publish:test-bundle red_team_vapp
+bun run publish:test-bundle malicious_uniswapv2
+```
 
 ## Transport and chain integration
 
