@@ -40,6 +40,25 @@ Default mode is dry-run recommendation only. Auto-vote is opt-in via `--auto-vot
 
 When running in continuous mode (`cargo run -- run`), the agent emits periodic info logs each cycle (current scan range, no-new-blocks heartbeats, and next poll wait), so operators can confirm it is actively checking chain progress.
 
+## Test with e2e bundles
+
+Use the `e2e` helper to quickly publish known test bundles and verify gov-agent pickup behavior.
+
+In one terminal, run gov-agent:
+
+```bash
+cd gov-agent
+cargo run -- run --profile devnet --rpc-url http://127.0.0.1:8545
+```
+
+In another terminal, publish a test bundle proposal:
+
+```bash
+cd e2e
+bun run publish:test-bundle red_team_vapp
+bun run publish:test-bundle malicious_uniswapv2
+```
+
 ## Transport and chain integration
 
 - Uses `alloy` for chain reads and writes.
