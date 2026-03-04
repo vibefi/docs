@@ -10,6 +10,9 @@ Examples comply with one of two [CLI packaging layouts](./cli.md#package):
 
 - **Constrained layout** (`aave-v3`, `uniswap-v2`, `safe-admin`)
   - pinned dependency and devDependency allowlists
+  - strict constrained entrypoint:
+    - `src/main.tsx` is required
+    - `index.html` must include `<script type="module" src="/src/main.tsx"></script>`
   - source/assets/ABI structure and extension checks
   - forbidden network patterns in source (`fetch`, XHR, WebSocket, HTTP imports/URLs)
 - **Static-html layout** (`zfi/`)

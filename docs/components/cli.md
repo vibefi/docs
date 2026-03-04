@@ -35,6 +35,10 @@ Validates and bundles a dapp directory:
    - `constrained`: `src/`, `assets/`, `abis/`, `vibefi.json`, `index.html`, `package.json`
    - `static-html`: `vibefi.json`, `index.html` plus only `.html`, `.js`, `.json` files
 
+   For constrained layout, the entrypoint is strict:
+   - `src/main.tsx` must exist
+   - `index.html` must include `<script type="module" src="/src/main.tsx"></script>`
+
 2. **Constrained dependency allowlist** — only pinned versions of approved packages:
    - `react` 19.2.4, `react-dom` 19.2.4, `wagmi` 3.4.1, `viem` 2.45.0, `shadcn` 3.7.0, `@tanstack/react-query` 5.90.20
    - Dev: `@vitejs/plugin-react` 5.1.2, `typescript` 5.9.3, `vite` 7.2.4, `@types/react` 19.2.4
