@@ -24,9 +24,9 @@ title: Gov Agent
 
 ## LLM prompt context shaping
 
-- Bundle text included in LLM prompts is minified by default (`review.minify_bundle_text = true`).
+- Bundle text included in LLM prompts is not minified by default (`review.minify_bundle_text = false`).
 - Minification removes indentation and empty lines, while preserving code tokens/identifiers.
-- Disable via config (`review.minify_bundle_text = false`) or env (`GOV_AGENT_MINIFY_BUNDLE_TEXT=false`).
+- Enable via config (`review.minify_bundle_text = true`) or env (`GOV_AGENT_MINIFY_BUNDLE_TEXT=true`).
 
 ## Run modes
 
